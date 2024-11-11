@@ -8,7 +8,13 @@
   import { DoctorsService } from ".././services";
   import Information from "./Steps/Information.svelte";
   import moment from "moment";
-
+  import Axios from "../services/axios";
+  import { apiToken } from "../stores/layout";
+  let {
+    token,
+  }: {
+    token?: any;
+  } = $props();
   let value: any = $state({
     user: {},
   });
@@ -18,6 +24,10 @@
   let completeInformation = $state({});
   let searchParams = $state(new URLSearchParams(window.location.search));
   onMount(async () => {
+    if (token) {
+      Axios.defaults.headers.common["API-TOKEN"] = token;
+      console.log("aloooo");
+    }
     let res = await DoctorsService.services();
     services = res.data;
     let step_step: stepTypes = "service";
