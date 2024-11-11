@@ -1,0 +1,46 @@
+{
+  "name": "consulation-web-component",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+		"dev": "vite dev",
+		"build": "vite build",
+		"preview": "vite preview",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"lint": "prettier --check .",
+		"format": "prettier --write ."
+	},
+  "devDependencies": {
+		"@sveltejs/adapter-auto": "^3.0.0",
+		"@sveltejs/kit": "^2.0.0",
+		"@sveltejs/vite-plugin-svelte": "^3.0.0",
+		"autoprefixer": "^10.4.19",
+		"postcss": "^8.4.38",
+		"prettier": "^3.1.1",
+		"prettier-plugin-svelte": "^3.1.2",
+		"prettier-plugin-tailwindcss": "^0.6.4",
+		"svelte": "^5.0.0-next.1",
+		"svelte-check": "^3.6.0",
+		"tailwindcss": "^3.4.4",
+		"tslib": "^2.4.1",
+		"typescript": "^5.0.0",
+		"vite": "^5.0.3"
+	},
+  "dependencies": {
+		"@faker-js/faker": "^8.4.1",
+		"@types/leaflet": "^1.9.12",
+		"@types/moment-jalaali": "^0.7.9",
+		"axios": "^1.7.2",
+		"chart.js": "^4.4.3",
+		"ckeditor4": "^4.24.0",
+		"ckeditor5": "^43.0.0",
+		"daisyui": "^4.12.2",
+		"leaflet": "^1.9.4",
+		"moment": "^2.30.1",
+		"moment-jalaali": "^0.10.1",
+		"plantir-uikit": "^0.0.24",
+		"sass": "^1.77.6"
+	}
+}

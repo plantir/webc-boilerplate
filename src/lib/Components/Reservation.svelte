@@ -1,0 +1,114 @@
+<script lang="ts">
+  import type { stepTypes } from ".././type";
+  import { onMount } from "svelte";
+  import ChoseService from "./Steps/ChoseService.svelte";
+  import Confirm from "./Steps/Confirm.svelte";
+  import DateTime from "./Steps/DateTime.svelte";
+  import ExpertsService from "./Steps/ExpertsService.svelte";
+  import { DoctorsService } from ".././services";
+  import Information from "./Steps/Information.svelte";
+  import moment from "moment";
+
+  let value: any = $state({
+    user: {},
+  });
+  let step: stepTypes = $state("service");
+  let services: any = $state([]);
+  let doctors = $state([]);
+  let completeInformation = $state({});
+  let searchParams = $state(new URLSearchParams(window.location.search));
+  onMount(async () => {
+    let res = await DoctorsService.services();
+    services = res.data;
+    let step_step: stepTypes = "service";
+    if (searchParams.get("service")) {
+      value.service = searchParams.get("service");
+      let res = await DoctorsService.get(value.service);
+      doctors = res.data;
+      step_step = "expert";
+    }
+    if (searchParams.get("doctor")) {
+      value.doctor = searchParams.get("doctor");
+      step_step = "date";
+    }
+    if (searchParams.get("book_date") && searchParams.get("start_time")) {
+      value.book_date = moment(
+        searchParams.get("book_date"),
+        "YYYY-MM-DD"
+      ).toString();
+      value.start_time = searchParams.get("start_time");
+      step_step = "information";
+    }
+    step = step_step;
+  });
+  const replaceURL = () => {
+    var newurl =
+      window.location.protocol +
+      "//" +
+      window.location.host +
+      window.location.pathname +
+      `?${searchParams.toString()}`;
+    window.history.replaceState({ path: newurl }, "", newurl);
+  };
+  const onNextStep = async () => {
+    switch (step) {
+      case "service":
+        let res = await DoctorsService.get(value.service);
+        doctors = res.data;
+        searchParams.set("service", value.service);
+        replaceURL();
+        step = "expert";
+        break;
+      case "expert":
+        searchParams.set("doctor", value.doctor);
+        replaceURL();
+        step = "date";
+        break;
+      case "date":
+        searchParams.set(
+          "book_date",
+          moment(value.book_date).format("YYYY-MM-DD")
+        );
+        searchParams.set("start_time", value.start_time);
+        replaceURL();
+        step = "information";
+        break;
+      case "information":
+        completeInformation = {
+          book_date: moment(value.book_date).format("YYYY-MM-DD"),
+          doctor: doctors.find((x: any) => x.id == value.doctor),
+          service: services.find((x: any) => x.id == value.service),
+          start_time: value.start_time,
+          user: value.user,
+          callback_url: "https://nobat.ghasemilawyer.com/gateway/callback",
+        };
+        step = "confirm";
+        break;
+      case "confirm":
+        res = await DoctorsService.sendReservation(completeInformation);
+        console.log(res);
+      // goto paymanet
+    }
+  };
+</script>
+
+<div class="reservation-card">
+  {#if step == "service"}
+    <ChoseService bind:value bind:step {services} {onNextStep} />
+  {:else if step == "expert"}
+    <ExpertsService bind:value bind:step {doctors} {onNextStep} />
+  {:else if step == "date"}
+    <DateTime bind:step bind:value {onNextStep} />
+  {:else if step == "information"}
+    <Information bind:step bind:value {onNextStep} />
+  {:else if step == "confirm"}
+    <Confirm bind:value bind:step {onNextStep} {completeInformation} />
+  {/if}
+</div>
+
+<style lang="scss">
+  .reservation-card {
+    @apply rounded-2xl border border-[#E8E8E8] bg-white p-4 sm:p-6;
+    box-shadow: 0px 0px 16px 0px #0000001a;
+  }
+</style>
