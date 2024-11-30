@@ -95,8 +95,9 @@
         step = "confirm";
         break;
       case "confirm":
-        res = await DoctorsService.sendReservation(completeInformation);
-        console.log(res);
+        const resReservation = await DoctorsService.sendReservation(completeInformation);
+        console.log(resReservation);
+        eval(resReservation.data.script)
       // goto paymanet
     }
   };

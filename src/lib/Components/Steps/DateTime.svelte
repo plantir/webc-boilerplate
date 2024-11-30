@@ -27,7 +27,7 @@
 		}
 	};
 	onMount(async () => {
-		const res: any = TimeService.get(value.doctor, value.service);
+		const res: any = await TimeService.get(value.doctor, value.service);
 		months = res.data;
 	});
 </script>
