@@ -1,21 +1,30 @@
 import { mount } from "svelte";
 import "./app.css";
-import ConsulationComponent from './lib/Components/Reservation.svelte'
-let AppConsulation = document.querySelector("app-consulation");
-if (AppConsulation) {
-  const token = AppConsulation.getAttribute("token");
-  while (AppConsulation.firstChild) {
-    AppConsulation.removeChild(AppConsulation.lastChild);
+import Callback from "./lib/Components/Callback.svelte";
+import Reservation from "./lib/Components/Reservation.svelte";
+let EmonshiNobat = document.querySelector("emonshi-nobat");
+if (EmonshiNobat) {
+  const token = EmonshiNobat.getAttribute("token");
+  while (EmonshiNobat.firstChild) {
+    EmonshiNobat.removeChild(EmonshiNobat.lastChild);
   }
-  mount(ConsulationComponent, {
-    target: AppConsulation,
+  mount(Reservation, {
+    target: EmonshiNobat,
     props: {
-      token
-    }
-  })
-  // mount()
-  // new ConsulationComponent({
-  //   target: AppConsulation,
-  //   props: { title, apikey },
-  // });
+      token,
+    },
+  });
+}
+let EmonshiCallback = document.querySelector("emonshi-callback");
+if (EmonshiCallback) {
+  const token = EmonshiCallback.getAttribute("token");
+  while (EmonshiCallback.firstChild) {
+    EmonshiCallback.removeChild(EmonshiCallback.lastChild);
+  }
+  mount(Callback, {
+    target: EmonshiCallback,
+    props: {
+      token,
+    },
+  });
 }

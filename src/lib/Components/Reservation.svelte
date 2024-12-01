@@ -1,15 +1,15 @@
 <script lang="ts">
-  import type { stepTypes } from ".././type";
+  import moment from "moment";
   import { onMount } from "svelte";
+  import { DoctorsService } from ".././services";
+  import type { stepTypes } from ".././type";
+  import Axios from "../services/axios";
+  import { clinicInfo } from "../stores/clinic";
   import ChoseService from "./Steps/ChoseService.svelte";
   import Confirm from "./Steps/Confirm.svelte";
   import DateTime from "./Steps/DateTime.svelte";
   import ExpertsService from "./Steps/ExpertsService.svelte";
-  import { DoctorsService } from ".././services";
   import Information from "./Steps/Information.svelte";
-  import moment from "moment";
-  import Axios from "../services/axios";
-  import { apiToken } from "../stores/layout";
   let {
     token,
   }: {
@@ -26,8 +26,12 @@
   onMount(async () => {
     if (token) {
       Axios.defaults.headers.common["API-TOKEN"] = token;
-      console.log("aloooo");
     }
+    try {
+      let { data } = await DoctorsService.config();
+      console.log(data);
+      clinicInfo.set(data);
+    } catch (error) {}
     let res = await DoctorsService.services();
     services = res.data;
     let step_step: stepTypes = "service";
@@ -90,15 +94,17 @@
           service: services.find((x: any) => x.id == value.service),
           start_time: value.start_time,
           user: value.user,
-          callback_url: "https://nobat.ghasemilawyer.com/gateway/callback",
+          callback_url:
+            $clinicInfo.CALLBACK_URL ||
+            `${location.protocol}//${location.host}/gateway/callback`,
         };
         step = "confirm";
         break;
       case "confirm":
-        const resReservation = await DoctorsService.sendReservation(completeInformation);
+        const resReservation =
+          await DoctorsService.sendReservation(completeInformation);
         console.log(resReservation);
-        eval(resReservation.data.script)
-      // goto paymanet
+        eval(resReservation.data.script);
     }
   };
 </script>
