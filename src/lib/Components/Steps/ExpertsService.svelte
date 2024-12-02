@@ -49,6 +49,7 @@
         bind:value={value.doctor}
         key={doctor.id}
         title={doctor.display_name}
+        onchange={onNextStep}
       >
         {#snippet iconWrapper()}
           <img src={baseURL + doctor.image} class="rounded-md" alt="" />
@@ -66,14 +67,5 @@
         </AppButton>
       </div>
     </div>
-    {#if value.doctor}
-      <div class="flex items-center gap-2">
-        <!-- <AppButton color="primary" outline onclick={reserveNext}>انتخاب اولین نوبت آزاد</AppButton> -->
-        <AppButton color="primary" onclick={goNext}>
-          رزرو نوبت
-          <ArrowLeftIcon class="w-5 " />
-        </AppButton>
-      </div>
-    {/if}
   </div>
 </div>

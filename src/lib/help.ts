@@ -1,5 +1,5 @@
 import moment from 'moment-jalaali';
-
+moment.loadPersian({ dialect: 'persian-modern' })
 export function validate(type: any, value: string) {
 	switch (type) {
 		case 'email':
@@ -223,5 +223,7 @@ export const days: any = {
 	Fr: 'جمعه'
 };
 export const showDateTime = (date: any, time: any) => {
-	return `${days[moment(date).format('dd')]} ${moment(date).format('jDD')} ${moment(date).format('jMMMM')} ماه ${moment(date).format('jYYYY')} ${time ? `ساعت ${time}` : ''}`;
+	// 
+	// 
+	return `${moment(date).format('dddd')} ${moment(date).format('jD')} ${moment(date).format('jMMMM')} ماه ${moment(date).format('jYYYY')} ${time ? `ساعت ${time}` : ''}`;
 };

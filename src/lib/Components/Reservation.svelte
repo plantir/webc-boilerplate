@@ -1,5 +1,5 @@
 <script lang="ts">
-  import moment from "moment";
+  import moment from "moment-jalaali";
   import { onMount } from "svelte";
   import { DoctorsService } from ".././services";
   import type { stepTypes } from ".././type";
@@ -24,6 +24,7 @@
   let completeInformation = $state({});
   let searchParams = $state(new URLSearchParams(window.location.search));
   onMount(async () => {
+    moment.loadPersian({ dialect: "persian-modern" });
     if (token) {
       Axios.defaults.headers.common["API-TOKEN"] = token;
     }
@@ -39,7 +40,12 @@
       value.service = searchParams.get("service");
       let res = await DoctorsService.get(value.service);
       doctors = res.data;
-      step_step = "expert";
+      if (doctors.length == 1) {
+        value.doctor = doctors[0].key;
+        step_step = "date";
+      } else {
+        step_step = "expert";
+      }
     }
     if (searchParams.get("doctor")) {
       value.doctor = searchParams.get("doctor");
@@ -70,8 +76,15 @@
         let res = await DoctorsService.get(value.service);
         doctors = res.data;
         searchParams.set("service", value.service);
-        replaceURL();
-        step = "expert";
+        if (doctors.length == 1) {
+          value.doctor = doctors[0].id;
+          searchParams.set("doctor", value.doctor);
+          replaceURL();
+          step = "date";
+        } else {
+          replaceURL();
+          step = "expert";
+        }
         break;
       case "expert":
         searchParams.set("doctor", value.doctor);
@@ -107,6 +120,16 @@
         eval(resReservation.data.script);
     }
   };
+  const goBack = () => {
+    switch (step) {
+      case "date":
+        if (doctors.length == 1) {
+          step = "service";
+        } else {
+          step = "expert";
+        }
+    }
+  };
 </script>
 
 <div class="reservation-card">
@@ -115,7 +138,7 @@
   {:else if step == "expert"}
     <ExpertsService bind:value bind:step {doctors} {onNextStep} />
   {:else if step == "date"}
-    <DateTime bind:step bind:value {onNextStep} />
+    <DateTime bind:step bind:value {onNextStep} {goBack} />
   {:else if step == "information"}
     <Information bind:step bind:value {onNextStep} />
   {:else if step == "confirm"}

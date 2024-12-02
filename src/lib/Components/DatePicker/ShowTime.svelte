@@ -103,16 +103,16 @@
     <div
       class="absolute -top-2 right-0 z-10 flex w-full items-center justify-between"
     >
-      <button onclick={PrevMonth}>
+      <div onclick={PrevMonth}>
         <div class="pointer-events-none rotate-180">
           <ArrowLeftIcon class="w-3" />
         </div>
-      </button>
-      <button onclick={NextMonth}>
+      </div>
+      <div onclick={NextMonth}>
         <div class="pointer-events-none">
           <ArrowLeftIcon class="w-3" />
         </div>
-      </button>
+      </div>
     </div>
   </div>
   <div class=" mb-1 grid grid-cols-7">
@@ -144,14 +144,14 @@
   <div class="my-4 text-sm text-black">زمان مورد نطر خود را انتخاب کنید</div>
   <div class="grid grid-cols-3 gap-2 sm:grid-cols-5 sm:gap-4">
     {#each selectedDateItem.times as item}
-      <button
+      <div
         onclick={() => setTime(item.time)}
         class="time {item.status == 'available'
           ? ''
           : 'disable-time'} {item.time == time ? 'active-time' : ''}"
       >
         {item.time}
-      </button>
+      </div>
     {/each}
   </div>
 {/if}
