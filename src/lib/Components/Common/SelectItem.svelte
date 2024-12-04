@@ -32,7 +32,7 @@
       {@render iconWrapper()}
     </div>
   {/if}
-  <div>
+  <div class="whitespace-nowrap">
     {title}
   </div>
 </div>

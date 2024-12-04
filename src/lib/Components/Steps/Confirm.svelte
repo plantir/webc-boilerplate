@@ -32,14 +32,14 @@
 </script>
 
 {#snippet itemValue(title: string, value: string, icon: Component)}
-	<div class="flex h-[64px] items-center justify-between border-t border-base-300">
+	<div class="flex h-[64px] items-center justify-between border-t border-[#F2F2F2] text-sm">
 		<div class="flex items-center gap-2">
 			<svelte:component this={icon} class="w-6" />
 			<div>
 				{title}
 			</div>
 		</div>
-		<div>
+		<div class="text-black">
 			{value}
 		</div>
 	</div>

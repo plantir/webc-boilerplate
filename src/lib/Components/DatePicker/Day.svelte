@@ -79,7 +79,7 @@
     }
   });
   let isFriday = $derived.by(() => {
-    return moment(firstDayOfMonth).add(index, "day").format("dddd") == "Friday";
+    return moment(firstDayOfMonth).add(index, "day").format("dddd") == "جمعه";
   });
   onMount(() => {});
 </script>
