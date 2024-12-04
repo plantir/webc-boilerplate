@@ -29,42 +29,40 @@ class DcotorsService {
     });
   }
   reservationInformation(token: any) {
-    return {
-      data: {
-        book_date: "2024-12-11",
-        callback_url: "http://localhost:5173/gateway/callback",
-        doctor: { id: 79, display_name: 'خانم الهام قاسمی', image: '/api/download/1727682725705_original.png' },
-        service: {
-          "id": 121,
-          "name": "مشاوره حضوری",
-          "image": "/api/download/1727683117867_original.png",
-          "duration": 120,
-          "is_meeting": 0,
-          "constraint_type": "calendar_based",
-          "total_amount": 1000000,
-          "prepay_amount": 500000
-        },
-        start_time: "18:00",
-        user: {
-          "name": "aryabod",
-          "family": "kheyrkhahan",
-          "email": "aryabod.kh@gmail.com",
-          "mobile": "09356664685",
-          "national_code": "002271159",
-          "accept_terms": true
-        },
-      }
-    }
-    return axios.get(`/clinic_service/clinics/information`, {
-      params: {
-        token
-      }
-    });
+    // return {
+    //   data: {
+    //     book_date: "2024-12-11",
+    //     callback_url: "http://localhost:5173/gateway/callback",
+    //     doctor: {
+    //       id: 79,
+    //       display_name: "خانم الهام قاسمی",
+    //       image: "/api/download/1727682725705_original.png",
+    //     },
+    //     service: {
+    //       id: 121,
+    //       name: "مشاوره حضوری",
+    //       image: "/api/download/1727683117867_original.png",
+    //       duration: 120,
+    //       is_meeting: 0,
+    //       constraint_type: "calendar_based",
+    //       total_amount: 1000000,
+    //       prepay_amount: 500000,
+    //     },
+    //     start_time: "18:00",
+    //     user: {
+    //       name: "aryabod",
+    //       family: "kheyrkhahan",
+    //       email: "aryabod.kh@gmail.com",
+    //       mobile: "09356664685",
+    //       national_code: "002271159",
+    //       accept_terms: true,
+    //     },
+    //   },
+    // };
+    return axios.get(`/clinic_service/clinics/payments/${token}/check`);
   }
-  sendReservationAgain(form) {
-    return axios.post(`/clinic_service/clinics/book`, {
-      ...form,
-    });
+  sendReservationAgain(token) {
+    return axios.get(`/clinic_service/clinics/payments/${token}/re-pay`);
   }
 }
 export default new DcotorsService();

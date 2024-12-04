@@ -5,6 +5,7 @@
   import type { stepTypes } from ".././type";
   import Axios from "../services/axios";
   import { clinicInfo } from "../stores/clinic";
+  import Loading from "./Common/Loading.svelte";
   import ChoseService from "./Steps/ChoseService.svelte";
   import Confirm from "./Steps/Confirm.svelte";
   import DateTime from "./Steps/DateTime.svelte";
@@ -22,6 +23,7 @@
   let services: any = $state([]);
   let doctors = $state([]);
   let completeInformation = $state({});
+  let loading = $state(true);
   let searchParams = $state(new URLSearchParams(window.location.search));
   onMount(async () => {
     moment.loadPersian({ dialect: "persian-modern" });
@@ -30,7 +32,6 @@
     }
     try {
       let { data } = await DoctorsService.config();
-      console.log(data);
       clinicInfo.set(data);
     } catch (error) {}
     let res = await DoctorsService.services();
@@ -50,6 +51,10 @@
     if (searchParams.get("doctor")) {
       value.doctor = searchParams.get("doctor");
       step_step = "date";
+      completeInformation = {
+        doctor: doctors.find((x: any) => x.id == value.doctor),
+        service: services.find((x: any) => x.id == value.service),
+      };
     }
     if (searchParams.get("book_date") && searchParams.get("start_time")) {
       value.book_date = moment(
@@ -58,8 +63,13 @@
       ).toString();
       value.start_time = searchParams.get("start_time");
       step_step = "information";
+      completeInformation = {
+        doctor: doctors.find((x: any) => x.id == value.doctor),
+        service: services.find((x: any) => x.id == value.service),
+      };
     }
     step = step_step;
+    loading = false;
   });
   const replaceURL = () => {
     var newurl =
@@ -89,6 +99,10 @@
       case "expert":
         searchParams.set("doctor", value.doctor);
         replaceURL();
+        completeInformation = {
+          doctor: doctors.find((x: any) => x.id == value.doctor),
+          service: services.find((x: any) => x.id == value.service),
+        };
         step = "date";
         break;
       case "date":
@@ -96,6 +110,10 @@
           "book_date",
           moment(value.book_date).format("YYYY-MM-DD")
         );
+        completeInformation = {
+          doctor: doctors.find((x: any) => x.id == value.doctor),
+          service: services.find((x: any) => x.id == value.service),
+        };
         searchParams.set("start_time", value.start_time);
         replaceURL();
         step = "information";
@@ -132,15 +150,17 @@
   };
 </script>
 
-<div class="reservation-card">
-  {#if step == "service"}
+<div class="reservation-card w-[600px]">
+  {#if loading}
+    <Loading />
+  {:else if step == "service"}
     <ChoseService bind:value bind:step {services} {onNextStep} />
   {:else if step == "expert"}
     <ExpertsService bind:value bind:step {doctors} {onNextStep} />
   {:else if step == "date"}
     <DateTime bind:step bind:value {onNextStep} {goBack} />
   {:else if step == "information"}
-    <Information bind:step bind:value {onNextStep} />
+    <Information bind:step bind:value {onNextStep} {completeInformation} />
   {:else if step == "confirm"}
     <Confirm bind:value bind:step {onNextStep} {completeInformation} />
   {/if}
