@@ -72,7 +72,7 @@
 	</div>
 	<Title title="مشخصات خود را وارد کنید" />
 	<div class="mb-4 border-b border-base-300"></div>
-	<div class="mb-4 text-sm">
+	<div class="mb-4 text-sm text-black">
 		سرویس نوبت تلفنی در تاریخ {showDateTime(value.book_date, value.start_time)}
 	</div>
 	<div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -83,6 +83,7 @@
 				oninput={() => {
 					error.name = '';
 				}}
+				placeholder="نام خود را وارد کنید"
 			/>
 			{@render errorMessage(error.name)}
 		</div>
@@ -93,6 +94,7 @@
 				oninput={() => {
 					error.family = '';
 				}}
+				placeholder="نام خانوادگی خود را وارد کنید"
 			/>
 			{@render errorMessage(error.family)}
 		</div>
@@ -103,6 +105,7 @@
 				oninput={() => {
 					error.email = '';
 				}}
+				placeholder="example@example.com"
 			/>
 			{@render errorMessage(error.email)}
 		</div>
@@ -113,6 +116,7 @@
 				oninput={() => {
 					error.mobile = '';
 				}}
+				placeholder="09123456789"
 			/>
 			{@render errorMessage(error.mobile)}
 		</div>
@@ -123,6 +127,7 @@
 				oninput={() => {
 					error.national_code = '';
 				}}
+				placeholder="0012233445"
 			/>
 			{@render errorMessage(error.national_code)}
 		</div>
@@ -131,6 +136,7 @@
 				<input
 					type="checkbox"
 					id="checkbox"
+					class="w-5 h-5"
 					bind:checked={value.user.accept_terms}
 					oninput={() => {
 						error.terms = '';
@@ -153,8 +159,8 @@
 		</div>
 		<div>
 			<AppButton color="primary" onclick={goNext}>
-				<ArrowLeftIcon class="w-5 " />
 				رزرو نوبت
+				<ArrowLeftIcon class="w-5 " />
 			</AppButton>
 		</div>
 	</div>

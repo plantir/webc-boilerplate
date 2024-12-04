@@ -99,22 +99,25 @@
 
 <div class={className}>
   <div class="relative mb-2 text-center font-semibold">
-    {moment(month).format("jMMMM jYYYY")}
+    <div class="text-black">
+      {moment(month).format("jMMMM jYYYY")}
+    </div>
     <div
-      class="absolute -top-2 right-0 z-10 flex w-full items-center justify-between"
+      class="absolute top-0 right-0 h-6 z-10 flex w-full items-center justify-between"
     >
-      <div onclick={PrevMonth}>
+      <div onclick={PrevMonth} class="cursor-pointer">
         <div class="pointer-events-none rotate-180">
-          <ArrowLeftIcon class="w-3" />
+          <ArrowLeftIcon class="w-6 text-black" />
         </div>
       </div>
-      <div onclick={NextMonth}>
+      <div onclick={NextMonth} class="cursor-pointer">
         <div class="pointer-events-none">
-          <ArrowLeftIcon class="w-3" />
+          <ArrowLeftIcon class="w-6 text-black" />
         </div>
       </div>
     </div>
   </div>
+  <div class="my-4 text-black text-sm">روز مورد نظر را انتخاب کنید:</div>
   <div class=" mb-1 grid grid-cols-7">
     {#each days as day, index}
       <div class="text-center text-xs {index == 6 ? 'text-error' : ''}">
@@ -146,7 +149,7 @@
     {#each selectedDateItem.times as item}
       <div
         onclick={() => setTime(item.time)}
-        class="time {item.status == 'available'
+        class="time cursor-pointer {item.status == 'available'
           ? ''
           : 'disable-time'} {item.time == time ? 'active-time' : ''}"
       >
