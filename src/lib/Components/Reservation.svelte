@@ -155,7 +155,7 @@
   };
 </script>
 
-<div class="reservation-card w-[600px] sm:w-[320px]">
+<div class="reservation-card w-[320px] md:w-[600px]">
   {#if loading}
     <Loading />
   {:else if step == "service"}
