@@ -4,7 +4,6 @@
   import AppButton from "../Common/AppButton.svelte";
   import SelectItem from "../Common/SelectItem.svelte";
   import Title from "../Common/Title.svelte";
-  import ArrowLeftIcon from "../Icons/ArrowLeftIcon.svelte";
   import ArrowRightIcon from "../Icons/ArrowRightIcon.svelte";
   let {
     value = $bindable(),

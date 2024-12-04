@@ -37,6 +37,11 @@
     let res = await DoctorsService.services();
     services = res.data;
     let step_step: stepTypes = "service";
+    step = step_step;
+    if (services.length == 1) {
+      value.service = services[0].id;
+      onNextStep();
+    }
     if (searchParams.get("service")) {
       value.service = searchParams.get("service");
       let res = await DoctorsService.get(value.service);
@@ -68,7 +73,7 @@
         service: services.find((x: any) => x.id == value.service),
       };
     }
-    step = step_step;
+
     loading = false;
   });
   const replaceURL = () => {

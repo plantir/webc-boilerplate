@@ -40,6 +40,7 @@
         bind:value={value.service}
         title={service.name}
         key={service.id}
+        onchange={onNextStep}
       >
         {#snippet iconWrapper()}
           <img src={baseURL + service.image} class="w-5 text-black" />

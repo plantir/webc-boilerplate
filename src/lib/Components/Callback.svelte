@@ -17,17 +17,17 @@
     token?: any;
   } = $props();
   let searchParams = $state(new URLSearchParams(window.location.search));
-  console.log(searchParams.get("track_id"));
   let completeInformation: any = $state(null);
   onMount(async () => {
     if (token) {
       Axios.defaults.headers.common["API-TOKEN"] = token;
     }
-    const res = await DoctorsService.reservationInformation(
-      searchParams.get("track_id")
-    );
-    console.log(res);
-    completeInformation = res.data;
+    if (searchParams.get("track_id")) {
+      const res = await DoctorsService.reservationInformation(
+        searchParams.get("track_id")
+      );
+      completeInformation = res.data;
+    }
   });
   const gotoBank = async () => {
     const res = await DoctorsService.sendReservationAgain(

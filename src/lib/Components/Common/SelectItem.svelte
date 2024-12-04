@@ -14,16 +14,19 @@
   } = $props();
   const changeValue = () => {
     value = key;
-    onchange();
+    onchange && onchange();
   };
 </script>
 
+<!-- svelte-ignore a11y_no_static_element_interactions -->
+<!-- svelte-ignore a11y_click_events_have_key_events -->
+<!-- svelte-ignore a11y_click_events_have_key_events -->
 <div
   class="box-border flex h-16 cursor-pointer items-center gap-2 rounded-md p-2 {value ==
   key
     ? 'bg-primary text-white'
     : 'border border-base-100 bg-white text-black'} "
-  onclick={changeValue}
+  on:click={changeValue}
 >
   {#if iconWrapper}
     <div
