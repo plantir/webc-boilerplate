@@ -1,6 +1,16 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import type { Component } from "svelte";
   import Axios from "../services/axios";
+  import CalendarIcon from "./Icons/CalendarIcon.svelte";
+  import TimeIcon from "./Icons/TimeIcon.svelte";
+  import UserIcon from "./Icons/UserIcon.svelte";
+  import CubeIcon from "./Icons/CubeIcon.svelte";
+  import CallIcon from "./Icons/CallIcon.svelte";
+  import moment from "moment-jalaali";
+  import { DoctorsService } from "../services";
+  import AppButton from "./Common/AppButton.svelte";
+  import RotateRightIcon from "./Icons/RotateRightIcon.svelte";
   let {
     token,
   }: {
@@ -8,17 +18,41 @@
   } = $props();
   let searchParams = $state(new URLSearchParams(window.location.search));
   console.log(searchParams.get("track_id"));
+  let completeInformation: any = $state(null);
   onMount(async () => {
     if (token) {
       Axios.defaults.headers.common["API-TOKEN"] = token;
     }
+    const res = await DoctorsService.reservationInformation("blabla");
+    completeInformation = res.data;
   });
+  const gotoBank = async () => {
+    const res = await DoctorsService.sendReservationAgain(completeInformation);
+    eval(res.data.script);
+  };
 </script>
 
-{#if searchParams.get("status") == "NOK" || searchParams.get("status") == "OK"}
+{#snippet itemValue(title: string, value: string, icon: Component)}
+  <div
+    class="flex h-[64px] items-center justify-between border-t border-[#F2F2F2] text-sm"
+  >
+    <div class="flex items-center gap-2">
+      <svelte:component this={icon} class="w-6" />
+      <div>
+        {title}
+      </div>
+    </div>
+    <div class="text-black">
+      {value}
+    </div>
+  </div>
+{/snippet}
+{#if (searchParams.get("status") == "NOK" || searchParams.get("status") == "OK") && completeInformation}
   <div class="bg-white border border-[#E8E8E8] rounded-2xl p-6">
     {#if searchParams.get("status") == "NOK"}
-      <div class="bg-red-50 px-5 py-8 flex items-center flex-col w-full rounded-2xl">
+      <div
+        class="bg-red-50 px-5 py-8 flex items-center flex-col w-full rounded-2xl"
+      >
         <svg
           width="56"
           height="56"
@@ -31,15 +65,63 @@
             fill="#FF0004"
           />
         </svg>
-        <span class="text-xl font-semibold mt-4"> پرداخت شما با شکست مواجه شد </span>
+        <span class="text-xl font-semibold mt-4">
+          پرداخت شما با شکست مواجه شد
+        </span>
       </div>
-      <span class="text-lg font-medium">
+      <div class="text-lg font-medium my-4">
         کد پیگیری: {searchParams.get("track_id")}
-      </span>
+      </div>
       <p>
         در صورتی که وجه مورد نظر از حساب شما کسر شده است طی ۷۲ ساعت به حساب شما
         بازگردانده میشود در غیر اینصورت لطفا با پشتیبانی تماس بگیرید
       </p>
+      <div class="mt-4">
+        {@render itemValue(
+          "تاریخ نوبت دهی",
+          moment(completeInformation.book_date).format("jYYYY/jMM/jDD"),
+          CalendarIcon
+        )}
+        {@render itemValue(
+          "ساعت حضور",
+          completeInformation.start_time,
+          TimeIcon
+        )}
+        {@render itemValue(
+          "نام وکیل",
+          completeInformation.doctor.display_name,
+          UserIcon
+        )}
+        {@render itemValue(
+          "سرویس شما",
+          completeInformation.service.name,
+          CubeIcon
+        )}
+        {@render itemValue(
+          "شماره موبایل",
+          completeInformation.user.mobile,
+          CallIcon
+        )}
+        {@render itemValue(
+          "مبلغ کل",
+          `${completeInformation.service.total_amount} تومان`,
+          CalendarIcon
+        )}
+      </div>
+      <div
+        class="my-4 flex h-[64px] items-center justify-between rounded-md bg-[#F3F1FF] px-4"
+      >
+        <div class="text-sm">مبلغ قابل پرداخت</div>
+        <div class="text-lg font-bold text-black">
+          {completeInformation.service.prepay_amount} تومان
+        </div>
+      </div>
+      <div class="flex items-center justify-end">
+        <AppButton color="primary" onclick={gotoBank}>
+          <RotateRightIcon class="w-6" />
+          تلاش مجدد
+        </AppButton>
+      </div>
     {/if}
     {#if searchParams.get("status") == "OK"}
       <div class="bg-green-50 px-5 py-8 flex items-center flex-col w-96">
@@ -57,10 +139,51 @@
         </svg>
 
         <span class="text-lg font-semibold"> پرداخت با موفقیت انجام شد </span>
-        <span class="text-lg font-medium">
-          کد پیگیری: {searchParams.get("track_id")}
-        </span>
-        <p>پرداخت شما با موفقیت انجام شد</p>
+      </div>
+
+      <span class="text-lg font-medium">
+        کد پیگیری: {searchParams.get("track_id")}
+      </span>
+      <p>پرداخت شما با موفقیت انجام شد</p>
+      <div>
+        {@render itemValue(
+          "تاریخ نوبت دهی",
+          moment(completeInformation.book_date).format("jYYYY/jMM/jDD"),
+          CalendarIcon
+        )}
+        {@render itemValue(
+          "ساعت حضور",
+          completeInformation.start_time,
+          TimeIcon
+        )}
+        {@render itemValue(
+          "نام وکیل",
+          completeInformation.doctor.display_name,
+          UserIcon
+        )}
+        {@render itemValue(
+          "سرویس شما",
+          completeInformation.service.name,
+          CubeIcon
+        )}
+        {@render itemValue(
+          "شماره موبایل",
+          completeInformation.user.mobile,
+          CallIcon
+        )}
+        {@render itemValue(
+          "مبلغ کل",
+          `${completeInformation.service.total_amount} تومان`,
+          CalendarIcon
+        )}
+      </div>
+      <div
+        class="my-4 flex h-[64px] items-center justify-between rounded-md bg-[#F3F1FF] px-4"
+      >
+        <div class="text-sm">مبلغ قابل پرداخت</div>
+        <div class="text-lg font-bold text-black">
+          {completeInformation.service.prepay_amount} تومان
+        </div>
       </div>
     {/if}
   </div>

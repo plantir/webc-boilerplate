@@ -19,13 +19,13 @@ class MeetingService {
         //     }
         // });
     }
-    services() {
-        return axios.get("/clinic_service/clinics/services");
+    enter() {
+        return {
+            data: null
+        }
+
+        // return axios.get("/apiUrl for getting meeting enter script");
     }
-    sendReservation(form: any) {
-        return axios.post(`/clinic_service/clinics/book`, {
-            ...form,
-        });
-    }
+
 }
 export default new MeetingService();

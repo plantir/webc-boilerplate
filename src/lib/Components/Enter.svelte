@@ -24,6 +24,12 @@
     const res = await MeetingService.get(meetingToken);
     meeting = res.data;
   });
+  const enterMetting = async () => {
+    const res = await MeetingService.enter();
+    if (res.data) {
+      eval(res.data.script);
+    }
+  };
 </script>
 
 <div class="bg-white border border-[#E8E8E8] rounded-2xl p-6">
@@ -52,6 +58,7 @@
   <div class="mt-4">
     <div
       class="h-14 px-7 rounded-md flex items-center gap-2 justify-center text-white bg-[#656767] w-max cursor-pointer"
+      onclick={enterMetting}
     >
       <div>
         <GoogleMeetIcon class="w-6 h-6" />
