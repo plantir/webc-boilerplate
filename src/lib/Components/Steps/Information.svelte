@@ -78,7 +78,10 @@
   <Title title="مشخصات خود را وارد کنید" />
   <div class="mb-4 border-b border-base-300"></div>
   <div class="mb-4 text-sm text-black">
-    سرویس نوبت تلفنی در تاریخ {showDateTime(value.book_date, value.start_time)}
+    سرویس {completeInformation.service.name} در تاریخ {showDateTime(
+      value.book_date,
+      value.start_time
+    )}
   </div>
   <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
     <div>
