@@ -11,10 +11,12 @@
     value = $bindable(),
     step = $bindable(),
     onNextStep,
+    completeInformation,
   }: {
     value: any;
     step: stepTypes;
     onNextStep: any;
+    completeInformation: any;
   } = $props();
   let error = $state({
     name: "",
@@ -29,7 +31,10 @@
   };
   const goNext = () => {
     let have_error = false;
-    if (!validate("email", value.user.email)) {
+    if (
+      completeInformation.service.is_meeting &&
+      !validate("email", value.user.email)
+    ) {
       have_error = true;
       error.email = "ایمیل وارد شده درست نمی‌باشد";
     }
@@ -72,9 +77,12 @@
     </AppButton>
   </div>
   <Title title="مشخصات خود را وارد کنید" />
-  <div class="my-4 border-b border-[#F2F2F2]"></div>
+  <div class="mb-4 border-b border-[#F2F2F2]"></div>
   <div class="mb-4 text-sm text-black">
-    سرویس نوبت تلفنی در تاریخ {showDateTime(value.book_date, value.start_time)}
+    سرویس {completeInformation.service.name} در تاریخ {showDateTime(
+      value.book_date,
+      value.start_time
+    )}
   </div>
   <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
     <div>
@@ -99,17 +107,19 @@
       />
       {@render errorMessage(error.family)}
     </div>
-    <div class="sm:col-span-2">
-      <AppInput
-        labelText="آدرس الکترونیکی"
-        bind:value={value.user.email}
-        oninput={() => {
-          error.email = "";
-        }}
-        placeholder="example@example.com"
-      />
-      {@render errorMessage(error.email)}
-    </div>
+    {#if completeInformation.service.is_meeting}
+      <div class="sm:col-span-2">
+        <AppInput
+          labelText="آدرس الکترونیکی"
+          bind:value={value.user.email}
+          oninput={() => {
+            error.email = "";
+          }}
+          placeholder="example@example.com"
+        />
+        {@render errorMessage(error.email)}
+      </div>
+    {/if}
     <div>
       <AppInput
         labelText="تلفن همراه"

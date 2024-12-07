@@ -10,7 +10,7 @@ export function validate(type: any, value: string) {
         )
       );
     case "phone":
-      return value && value.match(/09[0|1|2|3|4](?:[0-9]){8}/gi);
+      return value && value.match(/09[0|1|2|3|4|9](?:[0-9]){8}/gi);
     case "string":
       return !!value;
     default:
