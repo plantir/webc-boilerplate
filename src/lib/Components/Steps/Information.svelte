@@ -156,7 +156,7 @@
           />
           {#if value.user.accept_terms}
             <div
-              class="absolute top-0 right-0 h-5 w-5 flex items-center justify-center"
+              class="absolute top-0 right-0 h-5 w-5 flex items-center justify-center pointer-events-none"
             >
               <CheckIcon class="w-3 text-white" />
             </div>
