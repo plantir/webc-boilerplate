@@ -33,24 +33,32 @@
 {/snippet}
 
 <div>
-	<Title title="سرویس مورد نظر خود را انتخاب کنید" />
-	<div class="mt-4 gap-4 flex flex-wrap">
-		{#each services as service}
-			<SelectItem bind:value={value.service} title={service.name} key={service.id}>
-				{#snippet iconWrapper()}
-					<img src={baseURL + service.image} class="w-full h-full object-cover text-black" />
-				{/snippet}
-			</SelectItem>
-		{/each}
-	</div>
-	{#if value.service}
-		<div class="mt-4 flex items-center justify-end">
-			<AppButton color="primary" onclick={onNextStep}>
-				<span> مرحله بعد </span>
-				<div>
-					<ArrowLeftIcon class="w-6" />
-				</div>
-			</AppButton>
-		</div>
-	{/if}
+  <Title title="سرویس مورد نظر خود را انتخاب کنید" />
+  <div class="mt-4 gap-4 flex flex-wrap">
+    {#each services as service}
+      <SelectItem
+        onchange={onNextStep}
+        bind:value={value.service}
+        title={service.name}
+        key={service.id}
+      >
+        {#snippet iconWrapper()}
+          <img
+            src={baseURL + service.image}
+            class="w-full h-full object-cover text-black"
+          />
+        {/snippet}
+      </SelectItem>
+    {/each}
+  </div>
+  {#if value.service}
+    <div class="mt-4 flex items-center justify-end">
+      <AppButton color="primary" onclick={onNextStep}>
+        <span> مرحله بعد </span>
+        <div>
+          <ArrowLeftIcon class="w-6" />
+        </div>
+      </AppButton>
+    </div>
+  {/if}
 </div>

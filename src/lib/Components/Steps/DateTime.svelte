@@ -1,24 +1,26 @@
 <script lang="ts">
-  import { showDateTime } from "../.././help";
-  import type { stepTypes } from "../.././type";
   import { onMount } from "svelte";
+  import { showDateTime } from "../.././help";
+  import { TimeService } from "../.././services";
+  import type { stepTypes } from "../.././type";
   import AppButton from "../Common/AppButton.svelte";
+  import Loading from "../Common/Loading.svelte";
   import Title from "../Common/Title.svelte";
   import DatePicker from "../DatePicker/DatePicker.svelte";
   import ArrowLeftIcon from "../Icons/ArrowLeftIcon.svelte";
   import ArrowRightIcon from "../Icons/ArrowRightIcon.svelte";
-  import { TimeService } from "../.././services";
-  import Loading from "../Common/Loading.svelte";
   let {
     step = $bindable(),
     value = $bindable(),
     onNextStep,
     goBack,
+    completeInformation,
   }: {
     step: stepTypes;
     value: any;
     onNextStep: any;
     goBack: any;
+    completeInformation: any;
   } = $props();
   let months: any = $state({});
   let loading = $state(true);
@@ -42,7 +44,9 @@
     </AppButton>
   </div>
   <div>
-    <Title title="تاریخ مورد نظر خود را برای دریافت مشاوره تلفنی انتخاب کنید" />
+    <Title
+      title={`تاریخ مورد نظر خود را برای دریافت ${completeInformation.service.name} انتخاب کنید`}
+    />
   </div>
   <div class="my-4 border-b border-base-100"></div>
   {#if loading}
@@ -78,15 +82,11 @@
   </div>
   <div class="flex items-center justify-center mt-4 gap-4">
     <div class="flex items-center gap-2">
-      <div class="w-4 h-4 rounded-[4px] bg-[#E0E0E0]">
-
-      </div>
+      <div class="w-4 h-4 rounded-[4px] bg-[#E0E0E0]"></div>
       روز بدون نوبت
     </div>
     <div class="flex items-center gap-2">
-      <div class="w-4 h-4 rounded-[4px] bg-[#B6AEFF]">
-
-      </div>
+      <div class="w-4 h-4 rounded-[4px] bg-[#B6AEFF]"></div>
       روز انتخابی
     </div>
   </div>

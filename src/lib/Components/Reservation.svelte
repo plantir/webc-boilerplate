@@ -100,6 +100,10 @@
           replaceURL();
           step = "expert";
         }
+        completeInformation = {
+          doctor: doctors.find((x: any) => x.id == value.doctor),
+          service: services.find((x: any) => x.id == value.service),
+        };
         break;
       case "expert":
         searchParams.set("doctor", value.doctor);
@@ -163,7 +167,13 @@
   {:else if step == "expert"}
     <ExpertsService bind:value bind:step {doctors} {onNextStep} />
   {:else if step == "date"}
-    <DateTime bind:step bind:value {onNextStep} {goBack} />
+    <DateTime
+      bind:step
+      {completeInformation}
+      bind:value
+      {onNextStep}
+      {goBack}
+    />
   {:else if step == "information"}
     <Information bind:step bind:value {onNextStep} {completeInformation} />
   {:else if step == "confirm"}
