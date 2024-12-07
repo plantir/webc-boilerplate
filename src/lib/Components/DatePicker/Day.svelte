@@ -86,10 +86,11 @@
 
 <!-- style={borderFill} -->
 <div
-  class="flex h-7 w-7 items-center justify-center rounded-full p-0.5 text-xs text-current sm:h-9 sm:w-9 sm:p-1 {!activeMonth ||
+  class="flex h-7 w-7 items-center justify-center rounded-full p-0.5 text-xs sm:text-sm text-current sm:h-9 sm:w-9 sm:p-1 {!activeMonth ||
   isFriday
     ? 'disabled'
     : 'cursor-pointer'}"
+  style={borderFill}
   onclick={() => click(index)}
 >
   <div
@@ -103,7 +104,7 @@
 
 <style lang="scss">
   .active {
-    @apply rounded-full bg-primary text-white;
+    @apply rounded-full bg-[#B6AEFF];
   }
   .unavailable {
     @apply bg-base-300 text-[#949494];

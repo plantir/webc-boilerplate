@@ -76,4 +76,18 @@
       </AppButton>
     </div>
   </div>
+  <div class="flex items-center justify-center mt-4 gap-4">
+    <div class="flex items-center gap-2">
+      <div class="w-4 h-4 rounded-[4px] bg-[#E0E0E0]">
+
+      </div>
+      روز بدون نوبت
+    </div>
+    <div class="flex items-center gap-2">
+      <div class="w-4 h-4 rounded-[4px] bg-[#B6AEFF]">
+
+      </div>
+      روز انتخابی
+    </div>
+  </div>
 </div>

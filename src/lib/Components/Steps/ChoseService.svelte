@@ -36,11 +36,11 @@
 
 <div>
 	<Title title="سرویس مورد نظر خود را انتخاب کنید" />
-	<div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
+	<div class="mt-4 gap-4 flex flex-wrap">
 		{#each services as service}
 			<SelectItem bind:value={value.service} title={service.name} key={service.id}>
 				{#snippet iconWrapper()}
-					<img src={baseURL + service.image} class="w-5 text-black" />
+					<img src={baseURL + service.image} class="w-full h-full object-cover text-black" />
 				{/snippet}
 			</SelectItem>
 		{/each}

@@ -15,11 +15,11 @@
 	} = $props();
 </script>
 
-<button class="app-button color-{color} outline-{outline} {className}" {onclick}>
+<div class="app-button color-{color} cursor-pointer outline-{outline} {className}" {onclick}>
 	{#if children}
 		{@render children()}
 	{/if}
-</button>
+</div>
 
 <style lang="scss">
 	.app-button {

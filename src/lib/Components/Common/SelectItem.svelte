@@ -13,7 +13,11 @@
     onchange?: any;
   } = $props();
   const changeValue = () => {
-    value = key;
+    if (value == key) {
+      value = "";
+    } else {
+      value = key;
+    }
     onchange();
   };
 </script>
@@ -27,7 +31,7 @@
 >
   {#if iconWrapper}
     <div
-      class=" flex h-12 w-12 items-center justify-center rounded-md bg-[#F4F2FF]"
+      class=" flex h-12 w-12 items-center justify-center rounded-md bg-[#F4F2FF] overflow-hidden"
     >
       {@render iconWrapper()}
     </div>

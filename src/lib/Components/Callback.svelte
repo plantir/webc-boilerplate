@@ -11,6 +11,7 @@
   import { DoctorsService } from "../services";
   import AppButton from "./Common/AppButton.svelte";
   import RotateRightIcon from "./Icons/RotateRightIcon.svelte";
+  import { numberWithCommas } from "../help";
   let {
     token,
   }: {
@@ -104,7 +105,7 @@
         )}
         {@render itemValue(
           "مبلغ کل",
-          `${completeInformation.service.total_amount} تومان`,
+          `${numberWithCommas(completeInformation.service.total_amount)} تومان`,
           CalendarIcon
         )}
       </div>
@@ -113,7 +114,7 @@
       >
         <div class="text-sm">مبلغ قابل پرداخت</div>
         <div class="text-lg font-bold text-black">
-          {completeInformation.service.prepay_amount} تومان
+          {numberWithCommas(completeInformation.service.prepay_amount)} تومان
         </div>
       </div>
       <div class="flex items-center justify-end">
@@ -173,7 +174,7 @@
         )}
         {@render itemValue(
           "مبلغ کل",
-          `${completeInformation.service.total_amount} تومان`,
+          `${numberWithCommas(completeInformation.service.total_amount)} تومان`,
           CalendarIcon
         )}
       </div>
@@ -182,7 +183,7 @@
       >
         <div class="text-sm">مبلغ قابل پرداخت</div>
         <div class="text-lg font-bold text-black">
-          {completeInformation.service.prepay_amount} تومان
+          {numberWithCommas(completeInformation.service.prepay_amount)} تومان
         </div>
       </div>
     {/if}

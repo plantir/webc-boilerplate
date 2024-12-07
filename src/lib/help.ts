@@ -32,6 +32,9 @@ export function clickOutside(node: any) {
     },
   };
 }
+export const numberWithCommas = (x) => {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 export const chartColors = [
   "rgba(21, 112, 239, 1)",
   "rgba(46, 144, 250, 1)",
