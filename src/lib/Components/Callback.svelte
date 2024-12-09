@@ -24,6 +24,10 @@
     if (token) {
       Axios.defaults.headers.common["API-TOKEN"] = token;
     }
+    try {
+      let { data } = await DoctorsService.config();
+      clinicInfo.set(data);
+    } catch (error) {}
     if (searchParams.get("track_id")) {
       const res = await DoctorsService.reservationInformation(
         searchParams.get("track_id")
@@ -87,7 +91,7 @@
         )}
         {@render itemValue(
           "ساعت حضور",
-          completeInformation.start_time,
+          completeInformation.booking.start_time,
           TimeIcon
         )}
         {@render itemValue(
@@ -114,11 +118,9 @@
       <div
         class="my-4 flex h-[64px] items-center justify-between rounded-md bg-[#F3F1FF] px-4"
       >
-        <div class="text-sm">مبلغ قابل پرداخت</div>
+        <div class="text-sm">مبلغ پرداخت شده</div>
         <div class="text-lg font-bold text-black">
-          {numberWithCommas(
-            completeInformation.booking.original_service.prepay_amount
-          )} تومان
+          {numberWithCommas(completeInformation.amount)} تومان
         </div>
       </div>
     {:else}
