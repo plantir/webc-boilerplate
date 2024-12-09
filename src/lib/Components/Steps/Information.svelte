@@ -214,7 +214,7 @@
       onclick={closeModal}
     ></div>
     <div
-      class="w-[600px] overflow-y-auto h-[70vh] bg-white  border border-[#E8E8E8] rounded-2xl relative z-30"
+      class="w-[600px] h-[70vh] overflow-hidden flex flex-col bg-white  border border-[#E8E8E8] rounded-2xl relative z-30"
     >
       <div
         class="flex items-center justify-between sticky top-0 pt-6 px-6 pb-4 border-b border-[#F2F2F2] mb-4 bg-white"
@@ -227,7 +227,7 @@
           <CloseCircleIcon class="w-6" />
         </div>
       </div>
-      <div class="text-black mb-4 px-6">
+      <div class="text-black mb-4 px-6 flex-1 overflow-y-auto" style="">
         {@html $clinicInfo.terms}
       </div>
       <div class="flex sticky bottom-0 p-6 bg-white border-t border-[#F2F2F2]">
