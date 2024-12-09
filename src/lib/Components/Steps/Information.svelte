@@ -207,14 +207,14 @@
 </div>
 {#if show_modal}
   <div
-    class="fixed top-0 right-0 w-full h-full flex items-center justify-center"
+    class="fixed top-0 right-0 w-full h-full flex items-center justify-center z-[999]"
   >
     <div
       class="absolute top-0 right-0 w-full h-full bg-[#01010182]"
       onclick={closeModal}
     ></div>
     <div
-      class="w-[600px] bg-white p-6 border border-[#E8E8E8] rounded-2xl relative z-30"
+      class="w-[600px] overflow-y-auto max-h-[680px] bg-white p-6 border border-[#E8E8E8] rounded-2xl relative z-30"
     >
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-2">
