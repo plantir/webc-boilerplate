@@ -1,17 +1,17 @@
 <script lang="ts">
-  import { serviceLabel, type stepTypes } from "../.././type";
-  import { onMount, type Component } from "svelte";
-  import CalendarIcon from "../Icons/CalendarIcon.svelte";
   import moment from "moment-jalaali";
-  import CallIcon from "../Icons/CallIcon.svelte";
-  import TimeIcon from "../Icons/TimeIcon.svelte";
-  import UserIcon from "../Icons/UserIcon.svelte";
-  import CubeIcon from "../Icons/CubeIcon.svelte";
+  import { onMount, type Component } from "svelte";
+  import { type stepTypes } from "../.././type";
+  import { numberWithCommas } from "../../help";
+  import { clinicInfo } from "../../stores/clinic";
   import AppButton from "../Common/AppButton.svelte";
   import ArrowRightIcon from "../Icons/ArrowRightIcon.svelte";
-  import ArrowLeftIcon from "../Icons/ArrowLeftIcon.svelte";
+  import CalendarIcon from "../Icons/CalendarIcon.svelte";
+  import CallIcon from "../Icons/CallIcon.svelte";
+  import CubeIcon from "../Icons/CubeIcon.svelte";
   import DollarIcon from "../Icons/DollarIcon.svelte";
-  import { numberWithCommas } from "../../help";
+  import TimeIcon from "../Icons/TimeIcon.svelte";
+  import UserIcon from "../Icons/UserIcon.svelte";
 
   let {
     value = $bindable(),
@@ -62,7 +62,7 @@
     )}
     {@render itemValue("ساعت حضور", completeInformation.start_time, TimeIcon)}
     {@render itemValue(
-      "نام وکیل",
+      `نام ${$clinicInfo.PROFESSION}`,
       completeInformation.doctor.display_name,
       UserIcon
     )}

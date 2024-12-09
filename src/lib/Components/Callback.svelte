@@ -2,8 +2,10 @@
   import moment from "moment-jalaali";
   import type { Component } from "svelte";
   import { onMount } from "svelte";
+  import { numberWithCommas } from "../help";
   import { DoctorsService } from "../services";
   import Axios from "../services/axios";
+  import { clinicInfo } from "../stores/clinic";
   import AppButton from "./Common/AppButton.svelte";
   import CalendarIcon from "./Icons/CalendarIcon.svelte";
   import CallIcon from "./Icons/CallIcon.svelte";
@@ -11,7 +13,6 @@
   import RotateRightIcon from "./Icons/RotateRightIcon.svelte";
   import TimeIcon from "./Icons/TimeIcon.svelte";
   import UserIcon from "./Icons/UserIcon.svelte";
-  import { numberWithCommas } from "../help";
   let {
     token,
   }: {
@@ -23,11 +24,16 @@
     if (token) {
       Axios.defaults.headers.common["API-TOKEN"] = token;
     }
+    try {
+      let { data } = await DoctorsService.config();
+      clinicInfo.set(data);
+    } catch (error) {}
     if (searchParams.get("track_id")) {
       const res = await DoctorsService.reservationInformation(
         searchParams.get("track_id")
       );
       completeInformation = res.data;
+      console.log(completeInformation);
     }
   });
   const gotoBank = async () => {
@@ -85,36 +91,36 @@
         )}
         {@render itemValue(
           "ساعت حضور",
-          completeInformation.start_time,
+          completeInformation.booking.start_time,
           TimeIcon
         )}
         {@render itemValue(
-          "نام وکیل",
+          `نام ${$clinicInfo.PROFESSION}`,
           completeInformation.doctor.display_name,
           UserIcon
         )}
         {@render itemValue(
           "سرویس شما",
-          completeInformation.service.name,
+          completeInformation.booking.original_service.name,
           CubeIcon
         )}
         {@render itemValue(
           "شماره موبایل",
-          completeInformation.user.mobile,
+          completeInformation.patient.user.mobile,
           CallIcon
         )}
         {@render itemValue(
           "مبلغ کل",
-          `${numberWithCommas(completeInformation.service.total_amount)} تومان`,
+          `${numberWithCommas(completeInformation.booking.original_service.total_amount)} تومان`,
           CalendarIcon
         )}
       </div>
       <div
         class="my-4 flex h-[64px] items-center justify-between rounded-md bg-[#F3F1FF] px-4"
       >
-        <div class="text-sm">مبلغ قابل پرداخت</div>
+        <div class="text-sm">مبلغ پرداخت شده</div>
         <div class="text-lg font-bold text-black">
-          {numberWithCommas(completeInformation.service.prepay_amount)} تومان
+          {numberWithCommas(completeInformation.amount)} تومان
         </div>
       </div>
     {:else}
@@ -156,7 +162,7 @@
           TimeIcon
         )}
         {@render itemValue(
-          "نام وکیل",
+          `نام ${$clinicInfo.PROFESSION}`,
           completeInformation.doctor.display_name,
           UserIcon
         )}
