@@ -229,17 +229,6 @@
       </div>
       <div class="text-black mb-4 px-6">
         {@html $clinicInfo.terms}
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi quae nesciunt
-        odit repellendus deleniti. Itaque officiis labore mollitia eos, quia nemo
-        quidem ipsum explicabo, nisi veritatis velit, minus non? Non? Lorem ipsum
-        dolor sit amet consectetur adipisicing elit. Modi quae nesciunt odit repellendus
-        deleniti. Itaque officiis labore mollitia eos, quia nemo quidem ipsum explicabo,
-        nisi veritatis velit, minus non? Non? Lorem ipsum dolor sit amet consectetur
-        adipisicing elit. Modi quae nesciunt odit repellendus deleniti. Itaque officiis
-        labore mollitia eos, quia nemo quidem ipsum explicabo, nisi veritatis velit,
-        minus non? Non? Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        Modi quae nesciunt odit repellendus deleniti. Itaque officiis labore mollitia
-        eos, quia nemo quidem ipsum explicabo, nisi veritatis velit, minus non? Non?
       </div>
       <div class="flex sticky bottom-0 p-6 bg-white border-t border-[#F2F2F2]">
         <AppButton color="primary" onclick={acceptRules}>
