@@ -1,12 +1,15 @@
 <script lang="ts">
   import { showDateTime, validate } from "../.././help";
   import type { stepTypes } from "../.././type";
+  import { clinicInfo } from "../../stores/clinic";
   import AppButton from "../Common/AppButton.svelte";
   import AppInput from "../Common/AppInput.svelte";
   import Title from "../Common/Title.svelte";
   import ArrowLeftIcon from "../Icons/ArrowLeftIcon.svelte";
   import ArrowRightIcon from "../Icons/ArrowRightIcon.svelte";
+  import CheckCIrcleIcon from "../Icons/CheckCIrcleIcon.svelte";
   import CheckIcon from "../Icons/CheckIcon.svelte";
+  import CloseCircleIcon from "../Icons/CloseCircleIcon.svelte";
   let {
     value = $bindable(),
     step = $bindable(),
@@ -26,6 +29,7 @@
     national_code: "",
     terms: "",
   });
+  let show_modal = $state(false);
   const goBack = () => {
     step = "date";
   };
@@ -61,6 +65,17 @@
     if (!have_error) {
       onNextStep();
     }
+  };
+  const showRulesDialog = (e) => {
+    e.preventDefault();
+    show_modal = true;
+  };
+  const closeModal = () => {
+    show_modal = false;
+  };
+  const acceptRules = () => {
+    value.user.accept_terms = true;
+    show_modal = false;
   };
 </script>
 
@@ -162,7 +177,12 @@
             </div>
           {/if}
         </div>
-        <label for="checkbox"> قوانین و مقررات را مطالعه کردم </label>
+        <label for="checkbox">
+          <span class="text-primary cursor-pointer" onclick={showRulesDialog}>
+            قوانین و مقررات
+          </span>
+          را مطالعه کردم
+        </label>
       </div>
       <div></div>
       {@render errorMessage(error.terms)}
@@ -185,6 +205,39 @@
     </div>
   </div>
 </div>
+{#if show_modal}
+  <div
+    class="fixed top-0 right-0 w-full h-full flex items-center justify-center"
+  >
+    <div
+      class="absolute top-0 right-0 w-full h-full bg-[#01010182]"
+      onclick={closeModal}
+    ></div>
+    <div
+      class="w-[600px] bg-white p-6 border border-[#E8E8E8] rounded-2xl relative z-30"
+    >
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <div class="w-3 h-3 rounded-full bg-primary"></div>
+          <div class="text-xl font-semibold text-black">قوانین و مقررات</div>
+        </div>
+        <div class="cursor-pointer" onclick={closeModal}>
+          <CloseCircleIcon class="w-6" />
+        </div>
+      </div>
+      <div class="my-4 border-b border-[#F2F2F2]"></div>
+      <div class="text-black mb-4">
+        {$clinicInfo.terms}
+      </div>
+      <div class="flex">
+        <AppButton color="primary" onclick={acceptRules}>
+          <CheckCIrcleIcon class="w-6" />
+          قوانین را میپذیرم
+        </AppButton>
+      </div>
+    </div>
+  </div>
+{/if}
 
 <style lang="scss">
   .custom-app-checkbox {
