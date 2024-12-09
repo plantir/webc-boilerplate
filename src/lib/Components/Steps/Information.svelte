@@ -214,9 +214,11 @@
       onclick={closeModal}
     ></div>
     <div
-      class="w-[600px] overflow-y-auto max-h-[70vh] bg-white p-6 border border-[#E8E8E8] rounded-2xl relative z-30"
+      class="w-[600px] overflow-y-auto h-[70vh] bg-white  border border-[#E8E8E8] rounded-2xl relative z-30"
     >
-      <div class="flex items-center justify-between">
+      <div
+        class="flex items-center justify-between sticky top-0 pt-6 px-6 pb-4 border-b border-[#F2F2F2] mb-4 bg-white"
+      >
         <div class="flex items-center gap-2">
           <div class="w-3 h-3 rounded-full bg-primary"></div>
           <div class="text-xl font-semibold text-black">قوانین و مقررات</div>
@@ -225,11 +227,21 @@
           <CloseCircleIcon class="w-6" />
         </div>
       </div>
-      <div class="my-4 border-b border-[#F2F2F2]"></div>
-      <div class="text-black mb-4">
+      <div class="text-black mb-4 px-6">
         {@html $clinicInfo.terms}
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi quae nesciunt
+        odit repellendus deleniti. Itaque officiis labore mollitia eos, quia nemo
+        quidem ipsum explicabo, nisi veritatis velit, minus non? Non? Lorem ipsum
+        dolor sit amet consectetur adipisicing elit. Modi quae nesciunt odit repellendus
+        deleniti. Itaque officiis labore mollitia eos, quia nemo quidem ipsum explicabo,
+        nisi veritatis velit, minus non? Non? Lorem ipsum dolor sit amet consectetur
+        adipisicing elit. Modi quae nesciunt odit repellendus deleniti. Itaque officiis
+        labore mollitia eos, quia nemo quidem ipsum explicabo, nisi veritatis velit,
+        minus non? Non? Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        Modi quae nesciunt odit repellendus deleniti. Itaque officiis labore mollitia
+        eos, quia nemo quidem ipsum explicabo, nisi veritatis velit, minus non? Non?
       </div>
-      <div class="flex">
+      <div class="flex sticky bottom-0 p-6 bg-white border-t border-[#F2F2F2]">
         <AppButton color="primary" onclick={acceptRules}>
           <CheckCIrcleIcon class="w-6" />
           قوانین را میپذیرم
