@@ -227,7 +227,7 @@
       </div>
       <div class="my-4 border-b border-[#F2F2F2]"></div>
       <div class="text-black mb-4">
-        {$clinicInfo.terms}
+        {@html $clinicInfo.terms}
       </div>
       <div class="flex">
         <AppButton color="primary" onclick={acceptRules}>
