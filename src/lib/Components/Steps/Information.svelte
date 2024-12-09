@@ -214,7 +214,7 @@
       onclick={closeModal}
     ></div>
     <div
-      class="w-[600px] overflow-y-auto max-h-[680px] bg-white p-6 border border-[#E8E8E8] rounded-2xl relative z-30"
+      class="w-[600px] overflow-y-auto max-h-[70vh] bg-white p-6 border border-[#E8E8E8] rounded-2xl relative z-30"
     >
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-2">
