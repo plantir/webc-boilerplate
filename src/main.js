@@ -1,7 +1,7 @@
 import { mount } from "svelte";
 import "./app.css";
 import Callback from "./lib/Components/Callback.svelte";
-import Enter from "./lib/Components/Enter.svelte";
+import MeetInfo from "./lib/Components/MeetInfo.svelte";
 import Reservation from "./lib/Components/Reservation.svelte";
 let EmonshiNobat = document.querySelector("emonshi-nobat");
 if (EmonshiNobat) {
@@ -29,14 +29,14 @@ if (EmonshiCallback) {
     },
   });
 }
-let EmonshiEnter = document.querySelector("emonshi-enter");
-if (EmonshiEnter) {
-  const token = EmonshiEnter.getAttribute("token");
-  while (EmonshiEnter.firstChild) {
-    EmonshiEnter.removeChild(EmonshiEnter.lastChild);
+let EmonshiMeetInfo = document.querySelector("emonshi-meet-info");
+if (EmonshiMeetInfo) {
+  const token = EmonshiMeetInfo.getAttribute("token");
+  while (EmonshiMeetInfo.firstChild) {
+    EmonshiMeetInfo.removeChild(EmonshiMeetInfo.lastChild);
   }
-  mount(Enter, {
-    target: EmonshiEnter,
+  mount(MeetInfo, {
+    target: EmonshiMeetInfo,
     props: {
       token,
     },
