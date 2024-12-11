@@ -2,7 +2,7 @@ import { mount } from "svelte";
 import "./app.css";
 import Callback from "./lib/Components/Callback.svelte";
 import MeetInfo from "./lib/Components/MeetInfo.svelte";
-import MeetingCard from "./lib/Components/MeetingCard.svelte";
+import MeetingInfoCard from "./lib/Components/MeetingInfoCard.svelte";
 import Reservation from "./lib/Components/Reservation.svelte";
 let EmonshiNobat = document.querySelector("emonshi-nobat");
 if (EmonshiNobat) {
@@ -43,14 +43,14 @@ if (EmonshiMeetInfo) {
     },
   });
 }
-let EmonshiMeetCard = document.querySelector("emonshi-meet-card");
-if (EmonshiMeetCard) {
-  const token = EmonshiMeetCard.getAttribute("token");
-  while (EmonshiMeetCard.firstChild) {
-    EmonshiMeetCard.removeChild(EmonshiMeetCard.lastChild);
+let EmonshiMeetingInfoCard = document.querySelector("emonshi-meet-info-card");
+if (EmonshiMeetingInfoCard) {
+  const token = EmonshiMeetingInfoCard.getAttribute("token");
+  while (EmonshiMeetingInfoCard.firstChild) {
+    EmonshiMeetingInfoCard.removeChild(EmonshiMeetingInfoCard.lastChild);
   }
-  mount(MeetingCard, {
-    target: EmonshiMeetCard,
+  mount(MeetingInfoCard, {
+    target: EmonshiMeetingInfoCard,
     props: {
       token,
     },

@@ -4,17 +4,16 @@
   import { onMount } from "svelte";
   import { DoctorsService, MeetingService } from "../services";
   import Axios from "../services/axios";
+  import { clinicInfo } from "../stores/clinic";
+  import { baseURL } from "../stores/layout";
   import Loading from "./Common/Loading.svelte";
   import ArrowLeftIcon from "./Icons/ArrowLeftIcon.svelte";
   import CalendarIcon from "./Icons/CalendarIcon.svelte";
+  import CallIcon from "./Icons/CallIcon.svelte";
+  import CubeIcon from "./Icons/CubeIcon.svelte";
   import GoogleMeetIcon from "./Icons/GoogleMeetIcon.svelte";
   import TimeIcon from "./Icons/TimeIcon.svelte";
-  import CubeIcon from "./Icons/CubeIcon.svelte";
-  import CallIcon from "./Icons/CallIcon.svelte";
   import UserIcon from "./Icons/UserIcon.svelte";
-  import { clinicInfo } from "../stores/clinic";
-  import { numberWithCommas } from "../help";
-  import { baseURL } from "../stores/layout";
   moment.loadPersian({ dialect: "persian-modern" });
   let {
     token,
@@ -24,6 +23,7 @@
   let meeting: any = $state(null);
   let loading = $state(true);
   let searchParams = $state(new URLSearchParams(window.location.search));
+  let disabled = $state(true);
   onMount(async () => {
     if (token) {
       Axios.defaults.headers.common["API-TOKEN"] = token;
@@ -34,6 +34,9 @@
       clinicInfo.set(data);
       const res = await MeetingService.get(trackingCode);
       meeting = res.data;
+      disabled =
+        !meeting.meeting_link ||
+        !(diff.day == 0 && diff.hours == 0 && diff.minute <= 10);
     } catch (error) {}
     loading = false;
   });
@@ -93,8 +96,9 @@
     <div class="flex flex-col justify-center gap-4">
       <div>
         <div>
+          <!--  -->
           <img
-            src={baseURL + meeting.doctor?.image}
+            src={baseURL + meeting.doctor?.user?.image}
             class="w-16 h-16 rounded-full"
             alt=""
           />
@@ -122,14 +126,11 @@
         </div>
         <div>
           <a
-            class:pointer-events-none={!meeting.meeting_link ||
-             ( diff.day !== 0 &&
-              diff.hours !== 0 &&
-              diff.minute > 10)}
-            class:opacity-60={!meeting.meeting_link}
+            class:pointer-events-none={disabled}
+            class:opacity-60={disabled}
             class="h-14 w-full md:w-[210px] px-4 rounded-md flex items-center gap-x-2.5 justify-center text-white bg-[#656767] cursor-pointer"
             target="_blank"
-            href={meeting.meeting_link}
+            href={disabled ? "" : meeting.meeting_link}
           >
             <div>
               <GoogleMeetIcon class="w-6 h-6" />
