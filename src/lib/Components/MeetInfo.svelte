@@ -35,7 +35,7 @@
 {/if}
 {#if meeting}
   <div class="p-6">
-    <div class="flex items-center gap-6">
+    <div class="flex flex-col md:flex-row gap-6">
       <div class="flex items-center gap-4 text-black">
         <div>
           <CalendarIcon class="w-8 h-8" />
@@ -64,7 +64,7 @@
       <a
         class:pointer-events-none={!meeting.meeting_link}
         class:opacity-60={!meeting.meeting_link}
-        class="h-14 px-7 rounded-md flex items-center gap-2 justify-center text-white bg-[#656767] w-max cursor-pointer"
+        class="h-14 w-full md:w-[210px] px-4 rounded-md flex items-center gap-x-2.5 justify-center text-white bg-[#656767] cursor-pointer"
         target="_blank"
         href={meeting.meeting_link}
       >
