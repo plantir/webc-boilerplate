@@ -29,14 +29,19 @@
       Axios.defaults.headers.common["API-TOKEN"] = token;
     }
     const trackingCode = searchParams.get("trackingCode");
+    if (!trackingCode) {
+      loading = false;
+      return;
+    }
     try {
       let { data } = await DoctorsService.config();
       clinicInfo.set(data);
       const res = await MeetingService.get(trackingCode);
       meeting = res.data;
       disabled =
+        sessionIsFinished ||
         !meeting.meeting_link ||
-        !(diff.day == 0 && diff.hours == 0 && diff.minute <= 10);
+        !(diff.day <= 0 && diff.hours <= 0 && diff.minute <= 10);
     } catch (error) {}
     loading = false;
   });
@@ -59,6 +64,16 @@
     outpot.minute = diff % 60;
     console.log(diff, outpot);
     return outpot;
+  });
+  const sessionIsFinished = $derived.by(() => {
+    const now = moment();
+    const book_date = meeting.book_date.split(" ");
+    const date = moment(
+      `${book_date[0]} ${meeting.end_time}`,
+      "YYYY-MM-DD hh:mm:ss"
+    );
+    let isAfter = now.isAfter(date);
+    return isAfter;
   });
 </script>
 
@@ -105,30 +120,43 @@
         </div>
       </div>
       <div class="text-2xl font-bold text-black">
-        جلسه آنلاین با دکتر
+        جلسه آنلاین با
         <span class="text-[#029E91]"> {meeting.doctor?.display_name}</span>
       </div>
       <div class="text-lg font-bold text-black">زمان مانده تا شروع جلسه</div>
       <div class="flex items-end gap-4">
-        <div class="grid grid-cols-3 w-[210px] text-black">
-          <div class="flex flex-col items-center">
-            <div class="text-[13px]">روز</div>
-            <div class="h-9 text-lg font-bold">{diff.day}</div>
+        {#if sessionIsFinished}
+          <div class="items-center self-center text-lg font-bold text-red-500">
+            جلسه به پایان رسیده است
           </div>
-          <div class="flex flex-col items-center">
-            <div class="text-[13px]">ساعت</div>
-            <div class="h-9 text-lg font-bold">{diff.hours}</div>
+        {:else if diff.day < 0 || diff.hours < 0 || diff.minute < 0}
+          <div class="items-center self-center text-lg font-bold text-red-500">
+            جلسه هم اکنون شروع شده است
           </div>
-          <div class="flex flex-col items-center">
-            <div class="text-[13px]">دقیقه</div>
-            <div class="h-9 text-lg font-bold">{diff.minute}</div>
+        {:else}
+          <div class="grid grid-cols-3 w-[210px] text-black">
+            <div class="flex flex-col items-center">
+              <div class="text-[13px]">روز</div>
+              <div class="h-9 text-lg font-bold">{diff.day}</div>
+            </div>
+            <div class="flex flex-col items-center">
+              <div class="text-[13px]">ساعت</div>
+              <div class="h-9 text-lg font-bold">{diff.hours}</div>
+            </div>
+            <div class="flex flex-col items-center">
+              <div class="text-[13px]">دقیقه</div>
+              <div class="h-9 text-lg font-bold">{diff.minute}</div>
+            </div>
           </div>
-        </div>
+        {/if}
         <div>
           <a
             class:pointer-events-none={disabled}
             class:opacity-60={disabled}
-            class="h-14 w-full md:w-[210px] px-4 rounded-md flex items-center gap-x-2.5 justify-center text-white bg-[#656767] cursor-pointer"
+            class:bg-[#e2e2e2]={disabled}
+            class:!text-[#9F9F9F]={disabled}
+            class:bg-primary={!disabled}
+            class="h-14 w-full !no-underline text-white hover:!text-white md:w-[210px] px-4 rounded-md flex items-center gap-x-2.5 justify-center cursor-pointer"
             target="_blank"
             href={disabled ? "" : meeting.meeting_link}
           >

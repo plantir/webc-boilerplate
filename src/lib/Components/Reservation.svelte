@@ -22,7 +22,7 @@
   let step: stepTypes = $state("service");
   let services: any = $state([]);
   let doctors = $state([]);
-  let completeInformation = $state({});
+  let completeInformation: any = $state({});
   let loading = $state(true);
   let searchParams = $state(new URLSearchParams(window.location.search));
   onMount(async () => {
@@ -34,13 +34,9 @@
       let { data } = await DoctorsService.config();
       clinicInfo.set(data);
     } catch (error) {}
+    let step_step: stepTypes = "service";
     let res = await DoctorsService.services();
     services = res.data;
-    let step_step: stepTypes = "service";
-    if (services.length == 1) {
-      value.service = services[0].id;
-      onNextStep();
-    }
     if (searchParams.get("service")) {
       value.service = searchParams.get("service");
       let res = await DoctorsService.get(value.service);
@@ -71,6 +67,28 @@
         doctor: doctors.find((x: any) => x.id == value.doctor),
         service: services.find((x: any) => x.id == value.service),
       };
+    }
+
+    if (services.length == 1 && step_step == "service") {
+      value.service = services[0].id;
+      searchParams.set("service", value.service);
+      let res = await DoctorsService.get(value.service);
+      doctors = res.data;
+      completeInformation = {
+        service: services.find((x: any) => x.id == value.service),
+      };
+      if (doctors.length == 1) {
+        value.doctor = doctors[0].id;
+        searchParams.set("doctor", value.doctor);
+        completeInformation.doctor = doctors.find(
+          (x: any) => x.id == value.doctor
+        );
+        replaceURL();
+        step_step = "date";
+      } else {
+        replaceURL();
+        step_step = "expert";
+      }
     }
     step = step_step;
     loading = false;

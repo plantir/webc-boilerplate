@@ -12,7 +12,6 @@
   import DollarIcon from "../Icons/DollarIcon.svelte";
   import TimeIcon from "../Icons/TimeIcon.svelte";
   import UserIcon from "../Icons/UserIcon.svelte";
-
   let {
     value = $bindable(),
     step = $bindable(),
@@ -84,6 +83,16 @@
     <div class="text-sm">مبلغ قابل پرداخت</div>
     <div class="text-lg font-bold text-black">
       {numberWithCommas(completeInformation.service.prepay_amount)} تومان
+    </div>
+  </div>
+  <div>
+    <div class="daisy-alert daisy-alert-warning my-2">
+      مبلغ
+      {numberWithCommas(
+        completeInformation.service.total_amount -
+          completeInformation.service.prepay_amount
+      )}
+      تومان به صورت نقدی دریافت می گردد.
     </div>
   </div>
   <div class="flex items-center justify-between">

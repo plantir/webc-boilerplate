@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onMount } from "svelte";
   import { showDateTime, validate } from "../.././help";
   import type { stepTypes } from "../.././type";
   import { clinicInfo } from "../../stores/clinic";
@@ -33,6 +34,12 @@
   const goBack = () => {
     step = "date";
   };
+  onMount(() => {
+    let user = localStorage.getItem("user");
+    if (user) {
+      value.user = JSON.parse(user);
+    }
+  });
   const goNext = () => {
     let have_error = false;
     if (
@@ -63,6 +70,7 @@
       error.terms = "لطفا شرایط را مطالعه و قبول بفرمایید";
     }
     if (!have_error) {
+      localStorage.setItem("user", JSON.stringify(value.user));
       onNextStep();
     }
   };
@@ -214,7 +222,7 @@
       onclick={closeModal}
     ></div>
     <div
-      class="w-[600px] h-[70vh] overflow-hidden flex flex-col bg-white  border border-[#E8E8E8] rounded-2xl relative z-30"
+      class="w-[600px] h-[70vh] overflow-hidden flex flex-col bg-white border border-[#E8E8E8] rounded-2xl relative z-30"
     >
       <div
         class="flex items-center justify-between sticky top-0 pt-6 px-6 pb-4 border-b border-[#F2F2F2] mb-4 bg-white"
