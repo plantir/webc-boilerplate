@@ -57,10 +57,7 @@
       };
     }
     if (searchParams.get("book_date") && searchParams.get("start_time")) {
-      value.book_date = moment(
-        searchParams.get("book_date"),
-        "YYYY-MM-DD"
-      ).toString();
+      value.book_date = moment(searchParams.get("book_date"), "YYYY-MM-DD");
       value.start_time = searchParams.get("start_time");
       step_step = "information";
       completeInformation = {

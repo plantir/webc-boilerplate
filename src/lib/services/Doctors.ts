@@ -5,6 +5,7 @@ const getAvalaible = () => {
 };
 const availableTimes = () => {
   let times = [];
+  debugger;
   for (let index = 9; index <= 23; index++) {
     times.push({
       time: `${index == 9 ? "0" : ""}${index}:00`,

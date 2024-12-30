@@ -59,7 +59,9 @@
       moment(completeInformation.book_date).format("jYYYY/jMM/jDD"),
       CalendarIcon
     )}
-    {@render itemValue("ساعت حضور", completeInformation.start_time, TimeIcon)}
+    {#if completeInformation.service == "calendar_based"}
+      {@render itemValue("ساعت حضور", completeInformation.start_time, TimeIcon)}
+    {/if}
     {@render itemValue(
       `نام ${$clinicInfo.PROFESSION}`,
       completeInformation.doctor.display_name,
@@ -85,16 +87,18 @@
       {numberWithCommas(completeInformation.service.prepay_amount)} تومان
     </div>
   </div>
-  <div>
-    <div class="daisy-alert daisy-alert-warning my-2">
-      مبلغ
-      {numberWithCommas(
-        completeInformation.service.total_amount -
-          completeInformation.service.prepay_amount
-      )}
-      تومان به صورت نقدی دریافت می گردد.
+  {#if completeInformation.service.prepay_amount > 0 && completeInformation.service.total_amount > completeInformation.service.prepay_amount}
+    <div>
+      <div class="daisy-alert daisy-alert-warning my-2">
+        مبلغ
+        {numberWithCommas(
+          completeInformation.service.total_amount -
+            completeInformation.service.prepay_amount
+        )}
+        تومان به صورت نقدی دریافت می گردد.
+      </div>
     </div>
-  </div>
+  {/if}
   <div class="flex items-center justify-between">
     <div>
       <AppButton outline onclick={goBack}>
