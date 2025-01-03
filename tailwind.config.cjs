@@ -39,10 +39,7 @@ export default {
         'title': 'var(--title)'
       }
     },
-    fontFamily: {
-      'display': ['IranYekan'],
-      'body': ['IranYekan']
-    },
+   
     fontWeight: {
       thin: '100',
       extralight: '200',
