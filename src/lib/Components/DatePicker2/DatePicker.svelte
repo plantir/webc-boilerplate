@@ -30,10 +30,12 @@
   });
 
   function PrevMonth() {
-    currentMonth = moment(currentMonth).subtract(1, "month").startOf("jMonth");
+    moment.locale('fa');
+    currentMonth = moment(currentMonth).subtract(1, "jMonth").startOf("jMonth");
   }
   function NextMonth() {
-    currentMonth = moment(currentMonth).add(1, "month").startOf("jMonth");
+    moment.locale('fa');
+    currentMonth = moment(currentMonth).add(1, "jMonth").startOf("jMonth");
   }
   function selectDate(day: any) {
     const selected = moment(currentMonth).startOf("jMonth").add("days", day);
