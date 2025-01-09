@@ -61,9 +61,9 @@
       have_error = true;
       error.family = "لطفا نام خانوادگی را وارد نمایید";
     }
-    if (!validate("string", value.user.national_code)) {
+    if (!validate("nationalcode", value.user.national_code)) {
       have_error = true;
-      error.national_code = "لطفا کد ملی را وارد نمایید";
+      error.national_code = "فرمت کدملی وارد شده درست نمی‌باشد";
     }
     if (!value.user.accept_terms) {
       have_error = true;
