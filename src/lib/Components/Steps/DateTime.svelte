@@ -75,7 +75,7 @@
   </div>
   <div>
     <Title
-      title={`تاریخ موررد نظر خود را برای دریافت ${completeInformation.service.name} انتخاب کنید`}
+      title={`تاریخ مورد نظر خود را برای دریافت ${completeInformation.service.name} انتخاب کنید`}
     />
   </div>
   <div class="my-4 border-b border-base-100"></div>
