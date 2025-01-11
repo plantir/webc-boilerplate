@@ -111,7 +111,8 @@
         onclick={() => selectDate(index)}
         class:active={isDayActive(index)}
         class:selected={isDaySelected(index)}
-        class:current={+moment().format("jDD") == index + 1}
+        class:current={+moment().format("jDD") == index + 1 &&
+          moment().format("jMM") == moment(currentMonth).format("jMM")}
       >
         {index + 1}
       </span>
