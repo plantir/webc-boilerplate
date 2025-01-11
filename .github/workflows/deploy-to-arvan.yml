@@ -47,4 +47,4 @@ jobs:
           " > ~/.s3cfg
 
           # آپلود محتویات پوشه dist به آروان
-          s3cmd sync  ./dist/assets/ s3://nobat-cdn
+          s3cmd sync --acl-public ./dist/assets/ s3://nobat-cdn
