@@ -42,7 +42,7 @@
   <div>
     <Title title="متخصص مورد نظر خود را انتخاب کنید" />
   </div>
-  <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
+  <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
     {#each doctors as doctor}
       <SelectItem
         bind:value={value.doctor}

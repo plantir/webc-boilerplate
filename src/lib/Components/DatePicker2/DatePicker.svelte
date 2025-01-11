@@ -12,7 +12,7 @@
   } = $props();
 
   let daysOfMonth = $derived.by(() => {
-    let end_day = currentMonth.endOf("jMonth").format("jD");
+    let end_day = currentMonth.clone().endOf("jMonth").format("jD");
     return end_day;
   });
   let days = [
@@ -25,17 +25,25 @@
     "جمعه",
   ];
   let monthGap = $derived.by(() => {
-    let index = Math.abs((+currentMonth.startOf("jMonth").format("d") + 1) % 7);
+    let index = Math.abs(
+      (+currentMonth.clone().startOf("jMonth").format("d") + 1) % 7
+    );
     return index;
   });
 
   function PrevMonth() {
-    moment.locale('fa');
-    currentMonth = moment(currentMonth).subtract(1, "jMonth").startOf("jMonth");
+    moment.locale("fa");
+    currentMonth = moment(currentMonth)
+      .clone()
+      .subtract(1, "jMonth")
+      .startOf("jMonth");
   }
   function NextMonth() {
-    moment.locale('fa');
-    currentMonth = moment(currentMonth).add(1, "jMonth").startOf("jMonth");
+    moment.locale("fa");
+    currentMonth = moment(currentMonth)
+      .clone()
+      .add(1, "jMonth")
+      .startOf("jMonth");
   }
   function selectDate(day: any) {
     const selected = moment(currentMonth).startOf("jMonth").add("days", day);
@@ -62,7 +70,13 @@
   <div class=" h-6 z-10 flex w-full items-center justify-between px-6">
     <!-- svelte-ignore a11y_click_events_have_key_events -->
     <!-- svelte-ignore a11y_no_static_element_interactions -->
-    <div onclick={PrevMonth} class="cursor-pointer">
+
+    <div
+      onclick={PrevMonth}
+      class="cursor-pointer"
+      class:disabled={moment(currentMonth).format("jMM") ==
+        moment().format("jMM")}
+    >
       <div class="pointer-events-none rotate-180">
         <ArrowLeftIcon class="w-6 text-black" />
       </div>
@@ -97,6 +111,7 @@
         onclick={() => selectDate(index)}
         class:active={isDayActive(index)}
         class:selected={isDaySelected(index)}
+        class:current={+moment().format("jDD") == index + 1}
       >
         {index + 1}
       </span>
@@ -105,6 +120,9 @@
 </div>
 
 <style lang="scss">
+  .disabled {
+    @apply pointer-events-none opacity-50;
+  }
   .calendar-day {
     @apply flex items-center justify-center rounded-full text-current;
     span {
@@ -114,6 +132,9 @@
       }
       &.selected {
         @apply bg-[#B6AEFF];
+      }
+      &.current {
+        @apply bg-[#c0d4ee];
       }
     }
   }

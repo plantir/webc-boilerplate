@@ -275,6 +275,9 @@ export function useConvertPersianNumbers(node) {
     if (input.value !== convertedValue) {
       input.value = convertedValue;
       input.setSelectionRange(selectionStart, selectionEnd);
+      node.dispatchEvent(
+        new CustomEvent("input", { detail: { value: convertedValue } })
+      );
     }
   }
 

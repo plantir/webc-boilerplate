@@ -34,7 +34,7 @@
 
 <div>
   <Title title="سرویس مورد نظر خود را انتخاب کنید" />
-  <div class="mt-4 gap-4 flex flex-wrap">
+  <div class="mt-4 gap-4 grid grid-cols-1 md:grid-cols-2">
     {#each services as service}
       <SelectItem
         onchange={onNextStep}

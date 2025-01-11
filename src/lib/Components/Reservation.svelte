@@ -157,7 +157,6 @@
       case "confirm":
         const resReservation =
           await DoctorsService.sendReservation(completeInformation);
-        console.log(resReservation);
         eval(resReservation.data.script);
     }
   };

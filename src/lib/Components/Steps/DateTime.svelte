@@ -1,5 +1,5 @@
 <script lang="ts">
-  import moment from "moment";
+  import moment from "moment-jalaali";
   import { onMount } from "svelte";
   import { showDateTime } from "../.././help";
   import { TimeService } from "../.././services";
@@ -25,6 +25,7 @@
   } = $props();
   let availableDays: any = $state({});
   let loading = $state(true);
+  let setUpMonth = moment().startOf("jMonth");
   const goNext = () => {
     if (
       completeInformation.service.constraint_type == "calendar_based" &&
@@ -48,6 +49,9 @@
         availableDays[x.date] = x.times;
       });
     });
+    if (Object.keys(availableDays).length > 0) {
+      setUpMonth = moment(Object.keys(availableDays)[0]).startOf("jMonth");
+    }
     loading = false;
   });
 
@@ -55,6 +59,10 @@
     let availabel_times =
       availableDays[moment(value.book_date).format("YYYY-MM-DD")];
     return availabel_times;
+  });
+
+  let hasAvailableDays = $derived.by(() => {
+    return availableDays && Object.keys(availableDays).length > 0;
   });
 </script>
 
@@ -74,25 +82,33 @@
   {#if loading}
     <Loading />
   {:else}
-    <div class="my-4 text-black text-sm">روز مورد نظر را انتخاب کنید:</div>
-    <DatePicker
-      bind:value={value.book_date}
-      availableDays={Object.keys(availableDays)}
-    />
-    {#if value.book_date && completeInformation.service.constraint_type == "calendar_based"}
-      <div class="mt-5">
-        <div class="my-4 text-sm text-black">
-          زمان مورد نطر خود را انتخاب کنید
+    {#if !hasAvailableDays}
+      <div class="text-error font-bold text-center">
+        متاسفانه هیچ نوبتی در آینده یافت نشد.
+      </div>
+    {/if}
+    <div class:blur-sm={!hasAvailableDays}>
+      <div class="my-4 text-black text-sm">روز مورد نظر را انتخاب کنید:</div>
+      <DatePicker
+        bind:value={value.book_date}
+        currentMonth={setUpMonth}
+        availableDays={Object.keys(availableDays)}
+      />
+      {#if value.book_date && completeInformation.service.constraint_type == "calendar_based"}
+        <div class="mt-5">
+          <div class="my-4 text-sm text-black">
+            زمان مورد نطر خود را انتخاب کنید
+          </div>
+          <TimePicker bind:value={value.start_time} times={availbaleTimes} />
         </div>
-        <TimePicker bind:value={value.start_time} times={availbaleTimes} />
-      </div>
-    {/if}
-    {#if value.book_date}
-      <div class="mt-4 rounded-md bg-[#E7E4FF] p-2 text-sm text-black">
-        زمان انتخابی شما {showDateTime(value.book_date, value.start_time)}
-        می باشد.
-      </div>
-    {/if}
+      {/if}
+      {#if value.book_date}
+        <div class="mt-4 rounded-md bg-[#E7E4FF] p-2 text-sm text-black">
+          زمان انتخابی شما {showDateTime(value.book_date, value.start_time)}
+          می باشد.
+        </div>
+      {/if}
+    </div>
   {/if}
   <div class="mt-4 flex items-center justify-between">
     <div>
@@ -104,7 +120,7 @@
       </div>
     </div>
     <div>
-      <AppButton color="primary" onclick={goNext}>
+      <AppButton color="primary" onclick={goNext} disabled={!hasAvailableDays}>
         رزرو نوبت
         <ArrowLeftIcon class="w-5 " />
       </AppButton>
