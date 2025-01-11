@@ -1,0 +1,51 @@
+name: Build and Deploy to Arvan Cloud
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the code
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Set up Node.js environment (if your project uses Node.js)
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '21' # نسخه مورد نیاز Node.js را تنظیم کنید
+
+      # Install dependencies
+      - name: Install Dependencies
+        run: npm install
+
+      # Build the project
+      - name: Build Project
+        run: npm run build
+
+      # Upload to Arvan Cloud
+      - name: Deploy to Arvan Cloud
+        env:
+          ARVAN_API_KEY: ${{ secrets.ARVAN_API_KEY }} # کلید API آروان
+          ARVAN_BUCKET: ${{ secrets.ARVAN_BUCKET }}   # نام باکت آروان
+          ARVAN_REGION: ${{ secrets.ARVAN_REGION }}   # منطقه ذخیره‌سازی آروان
+        run: |
+          # نصب ابزار s3cmd
+          sudo apt update && sudo apt install -y s3cmd
+
+          # تنظیم s3cmd برای ابر آروان
+          echo "[default]
+          access_key = ${ARVAN_ACCESS_KEY}
+          secret_key = ${ARVAN_SECRET_KEY}
+          host_base = nobat-cdn.s3.ir-thr-at1.arvanstorage.ir
+          host_bucket = %(bucket)s.${ARVAN_REGION}.s3.ir-thr-at1.arvanstorage.ir
+          use_https = True
+          " > ~/.s3cfg
+
+          # آپلود محتویات پوشه dist به آروان
+          s3cmd sync --delete-removed dist/ s3://${ARVAN_BUCKET}/
