@@ -31,9 +31,8 @@ jobs:
       # Upload to Arvan Cloud
       - name: Deploy to Arvan Cloud
         env:
-          ARVAN_API_KEY: ${{ secrets.ARVAN_API_KEY }} # کلید API آروان
-          ARVAN_BUCKET: ${{ secrets.ARVAN_BUCKET }}   # نام باکت آروان
-          ARVAN_REGION: ${{ secrets.ARVAN_REGION }}   # منطقه ذخیره‌سازی آروان
+          ARVAN_ACCESS_KEY: ${{ secrets.ARVAN_ACCESS_KEY }} # کلید API آروان
+          ARVAN_SECRET_KEY: ${{ secrets.ARVAN_SECRET_KEY }}   # نام باکت آروان
         run: |
           # نصب ابزار s3cmd
           sudo apt update && sudo apt install -y s3cmd
@@ -43,7 +42,7 @@ jobs:
           access_key = ${ARVAN_ACCESS_KEY}
           secret_key = ${ARVAN_SECRET_KEY}
           host_base = nobat-cdn.s3.ir-thr-at1.arvanstorage.ir
-          host_bucket = %(bucket)s.${ARVAN_REGION}.s3.ir-thr-at1.arvanstorage.ir
+          host_bucket = %(bucket)s.nobat-cdn.s3.ir-thr-at1.arvanstorage.ir
           use_https = True
           " > ~/.s3cfg
 
