@@ -39,10 +39,10 @@ jobs:
 
           # تنظیم s3cmd برای ابر آروان
           echo "[default]
-          access_key = ${ARVAN_ACCESS_KEY}
-          secret_key = ${ARVAN_SECRET_KEY}
-          host_base = nobat-cdn.s3.ir-thr-at1.arvanstorage.ir
-          host_bucket = %(bucket)s.nobat-cdn.s3.ir-thr-at1.arvanstorage.ir
+          access_key = b8e1cfb1-39f5-49d9-be8c-824f19ed7449
+          secret_key = d722aedb7b06bfdf977a9d2eb803c0afdb02be7f65acf6b3ba3ae500eca43651
+          host_base = s3.ir-thr-at1.arvanstorage.ir
+          host_bucket = %(bucket)s.s3.ir-thr-at1.arvanstorage.ir
           use_https = True
           " > ~/.s3cfg
 
