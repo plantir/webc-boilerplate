@@ -34,7 +34,7 @@ export function clickOutside(node: any) {
 }
 export const numberWithCommas = (x) => {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
+};
 export const chartColors = [
   "rgba(21, 112, 239, 1)",
   "rgba(46, 144, 250, 1)",
@@ -235,3 +235,27 @@ export const showDateTime = (date: any, time: any) => {
   //
   return `${moment(date).format("dddd")} ${moment(date).format("jD")} ${moment(date).format("jMMMM")} ماه ${moment(date).format("jYYYY")} ${time ? `ساعت ${time}` : ""}`;
 };
+
+export function useConvertPersianNumbers(node) {
+  const convertToEnglish = (text) =>
+    text.replace(/[۰-۹]/g, (d: any) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d));
+
+  function handleInput(event) {
+    const input = event.target;
+    const selectionStart = input.selectionStart;
+    const selectionEnd = input.selectionEnd;
+    const convertedValue = convertToEnglish(input.value);
+    if (input.value !== convertedValue) {
+      input.value = convertedValue;
+      input.setSelectionRange(selectionStart, selectionEnd);
+    }
+  }
+
+  node.addEventListener("input", handleInput);
+
+  return {
+    destroy() {
+      node.removeEventListener("input", handleInput);
+    },
+  };
+}

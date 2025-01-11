@@ -11,6 +11,7 @@
   import CheckCIrcleIcon from "../Icons/CheckCIrcleIcon.svelte";
   import CheckIcon from "../Icons/CheckIcon.svelte";
   import CloseCircleIcon from "../Icons/CloseCircleIcon.svelte";
+
   let {
     value = $bindable(),
     step = $bindable(),
@@ -150,6 +151,7 @@
         oninput={() => {
           error.mobile = "";
         }}
+        convertPersian={true}
         placeholder="09123456789"
       />
       {@render errorMessage(error.mobile)}
@@ -161,6 +163,7 @@
         oninput={() => {
           error.national_code = "";
         }}
+        convertPersian={true}
         placeholder="0012233445"
       />
       {@render errorMessage(error.national_code)}
