@@ -17,11 +17,13 @@
     step = $bindable(),
     onNextStep,
     completeInformation,
+    actions,
   }: {
-    value: any;
-    step: stepTypes;
-    onNextStep: any;
+    value?: any;
+    step?: stepTypes;
+    onNextStep?: any;
     completeInformation: any;
+    actions?: any;
   } = $props();
   const goBack = () => {
     step = "information";
@@ -59,7 +61,7 @@
       moment(completeInformation.book_date).format("jYYYY/jMM/jDD"),
       CalendarIcon
     )}
-    {#if completeInformation.service == "calendar_based"}
+    {#if completeInformation.service.constraint_type == "calendar_based"}
       {@render itemValue("ساعت حضور", completeInformation.start_time, TimeIcon)}
     {/if}
     {@render itemValue(
@@ -100,17 +102,21 @@
     </div>
   {/if}
   <div class="flex items-center justify-between">
-    <div>
-      <AppButton outline onclick={goBack}>
-        <ArrowRightIcon class="w-5 " />
-        بازگشت
-      </AppButton>
-    </div>
-    <div>
-      <AppButton color="primary" onclick={goNext}>
-        <DollarIcon class="w-5 " />
-        پرداخت
-      </AppButton>
-    </div>
+    {#if actions}
+      {@render actions()}
+    {:else}
+      <div>
+        <AppButton outline onclick={goBack}>
+          <ArrowRightIcon class="w-5 " />
+          بازگشت
+        </AppButton>
+      </div>
+      <div>
+        <AppButton color="primary" onclick={goNext}>
+          <DollarIcon class="w-5 " />
+          پرداخت
+        </AppButton>
+      </div>
+    {/if}
   </div>
 </div>

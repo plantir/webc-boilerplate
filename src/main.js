@@ -1,6 +1,7 @@
 import { mount } from "svelte";
 import "./app.css";
 import Callback from "./lib/Components/Callback.svelte";
+import Invoice from "./lib/Components/Invoice.svelte";
 import MeetInfo from "./lib/Components/MeetInfo.svelte";
 import MeetingInfoCard from "./lib/Components/MeetingInfoCard.svelte";
 import Reservation from "./lib/Components/Reservation.svelte";
@@ -51,6 +52,20 @@ if (EmonshiMeetingInfoCard) {
   }
   mount(MeetingInfoCard, {
     target: EmonshiMeetingInfoCard,
+    props: {
+      token,
+    },
+  });
+}
+
+let EmonshiInvoice = document.querySelector("emonshi-invoice");
+if (EmonshiInvoice) {
+  const token = EmonshiInvoice.getAttribute("token");
+  while (EmonshiInvoice.firstChild) {
+    EmonshiInvoice.removeChild(EmonshiInvoice.lastChild);
+  }
+  mount(Invoice, {
+    target: EmonshiInvoice,
     props: {
       token,
     },

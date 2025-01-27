@@ -187,7 +187,7 @@
       >
         <div class="text-sm">مبلغ قابل پرداخت</div>
         <div class="text-lg font-bold text-black">
-          {completeInformation.booking.original_service.prepay_amount} تومان
+          {completeInformation.amount} تومان
         </div>
       </div>
       <div class="flex items-center justify-end">
