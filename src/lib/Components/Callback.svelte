@@ -87,7 +87,7 @@
       <div>
         {@render itemValue(
           "تاریخ نوبت دهی",
-          moment(completeInformation.book_date).format("jYYYY/jMM/jDD"),
+          moment(completeInformation.booking.book_date).format("jYYYY/jMM/jDD"),
           CalendarIcon
         )}
         {@render itemValue(
