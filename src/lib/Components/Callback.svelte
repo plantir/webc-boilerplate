@@ -80,9 +80,9 @@
         <span class="text-lg font-semibold"> پرداخت با موفقیت انجام شد </span>
       </div>
 
-      <span class="text-lg font-medium text-center">
+      <div class="text-lg font-medium text-center">
         کد پیگیری: {searchParams.get("track_id")}
-      </span>
+      </div>
       <!-- <p>پرداخت شما با موفقیت انجام شد</p> -->
       <div>
         {@render itemValue(
