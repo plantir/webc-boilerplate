@@ -34,6 +34,16 @@
   onMount(() => {
     console.log(completeInformation);
   });
+  const getTotalAmount = () => {
+    let service =
+      completeInformation.doctor.doctor_service || completeInformation.service;
+    return service.total_amount;
+  };
+  const getPrePayAmount = () => {
+    let service =
+      completeInformation.doctor.doctor_service || completeInformation.service;
+    return service.prepay_amount;
+  };
 </script>
 
 {#snippet itemValue(title: string, value: string, icon: Component)}
@@ -77,7 +87,7 @@
     )}
     {@render itemValue(
       "مبلغ کل",
-      `${numberWithCommas(completeInformation.service.total_amount)} تومان`,
+      `${numberWithCommas(getTotalAmount())} تومان`,
       CalendarIcon
     )}
   </div>
@@ -86,17 +96,14 @@
   >
     <div class="text-sm">مبلغ قابل پرداخت</div>
     <div class="text-lg font-bold text-black">
-      {numberWithCommas(completeInformation.service.prepay_amount)} تومان
+      {numberWithCommas(getPrePayAmount())} تومان
     </div>
   </div>
-  {#if completeInformation.service.prepay_amount > 0 && completeInformation.service.total_amount > completeInformation.service.prepay_amount}
+  {#if getPrePayAmount() > 0 && getTotalAmount() > getPrePayAmount()}
     <div>
       <div class="daisy-alert daisy-alert-warning my-2">
         مبلغ
-        {numberWithCommas(
-          completeInformation.service.total_amount -
-            completeInformation.service.prepay_amount
-        )}
+        {numberWithCommas(getTotalAmount() - getPrePayAmount())}
         تومان به صورت نقدی دریافت می گردد.
       </div>
     </div>
