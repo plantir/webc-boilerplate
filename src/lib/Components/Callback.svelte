@@ -10,6 +10,7 @@
   import CalendarIcon from "./Icons/CalendarIcon.svelte";
   import CallIcon from "./Icons/CallIcon.svelte";
   import CubeIcon from "./Icons/CubeIcon.svelte";
+  import DollarIcon from "./Icons/DollarIcon.svelte";
   import RotateRightIcon from "./Icons/RotateRightIcon.svelte";
   import TimeIcon from "./Icons/TimeIcon.svelte";
   import UserIcon from "./Icons/UserIcon.svelte";
@@ -79,7 +80,7 @@
         <span class="text-lg font-semibold"> پرداخت با موفقیت انجام شد </span>
       </div>
 
-      <span class="text-lg font-medium">
+      <span class="text-lg font-medium text-center">
         کد پیگیری: {searchParams.get("track_id")}
       </span>
       <p>پرداخت شما با موفقیت انجام شد</p>
@@ -112,7 +113,7 @@
         {@render itemValue(
           "مبلغ کل",
           `${numberWithCommas(completeInformation.booking.original_service.total_amount)} تومان`,
-          CalendarIcon
+          DollarIcon
         )}
       </div>
       <div
@@ -143,7 +144,7 @@
           پرداخت شما با شکست مواجه شد
         </span>
       </div>
-      <div class="text-lg font-medium my-4">
+      <div class="text-lg font-medium my-4 text-center">
         کد پیگیری: {searchParams.get("track_id")}
       </div>
       <p>
@@ -178,8 +179,8 @@
         )}
         {@render itemValue(
           "مبلغ کل",
-          `${completeInformation.booking.original_service.total_amount} تومان`,
-          CalendarIcon
+          `${numberWithCommas(completeInformation.booking.original_service.total_amount)} تومان`,
+          DollarIcon
         )}
       </div>
       <div
@@ -187,11 +188,11 @@
       >
         <div class="text-sm">مبلغ قابل پرداخت</div>
         <div class="text-lg font-bold text-black">
-          {completeInformation.amount} تومان
+          {numberWithCommas(completeInformation.amount)} تومان
         </div>
       </div>
-      <div class="flex items-center justify-end">
-        <AppButton color="primary" onclick={gotoBank}>
+      <div class="flex items-center justify-center">
+        <AppButton color="primary" class="w-full lg:w-auto" onclick={gotoBank}>
           <RotateRightIcon class="w-6" />
           تلاش مجدد
         </AppButton>
