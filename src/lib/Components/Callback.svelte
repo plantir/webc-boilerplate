@@ -63,7 +63,7 @@
 {#if completeInformation}
   <div class="bg-white border border-[#E8E8E8] rounded-2xl p-6">
     {#if completeInformation.status == "success"}
-      <div class="bg-green-50 px-5 py-8 flex items-center flex-col w-96">
+      <div class="bg-green-50 px-5 py-8 flex items-center flex-col w-full">
         <svg
           width="56"
           height="56"
@@ -83,7 +83,7 @@
       <span class="text-lg font-medium text-center">
         کد پیگیری: {searchParams.get("track_id")}
       </span>
-      <p>پرداخت شما با موفقیت انجام شد</p>
+      <!-- <p>پرداخت شما با موفقیت انجام شد</p> -->
       <div>
         {@render itemValue(
           "تاریخ نوبت دهی",
