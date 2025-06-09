@@ -90,11 +90,13 @@
           moment(completeInformation.booking.book_date).format("jYYYY/jMM/jDD"),
           CalendarIcon
         )}
-        {@render itemValue(
-          "ساعت حضور",
-          completeInformation.booking.start_time,
-          TimeIcon
-        )}
+        {#if completeInformation.booking.original_service.constraint_type == "calendar_based"}
+          {@render itemValue(
+            "ساعت حضور",
+            completeInformation.booking.start_time,
+            TimeIcon
+          )}
+        {/if}
         {@render itemValue(
           `نام ${$clinicInfo.PROFESSION}`,
           completeInformation.doctor.display_name,
