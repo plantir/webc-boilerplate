@@ -1,73 +1,20 @@
 import { mount } from "svelte";
 import "./app.css";
-import Callback from "./lib/Components/Callback.svelte";
-import Invoice from "./lib/Components/Invoice.svelte";
-import MeetInfo from "./lib/Components/MeetInfo.svelte";
-import MeetingInfoCard from "./lib/Components/MeetingInfoCard.svelte";
-import Reservation from "./lib/Components/Reservation.svelte";
-let EmonshiNobat = document.querySelector("emonshi-nobat");
-if (EmonshiNobat) {
-  const token = EmonshiNobat.getAttribute("token");
-  while (EmonshiNobat.firstChild) {
-    EmonshiNobat.removeChild(EmonshiNobat.lastChild);
-  }
-  mount(Reservation, {
-    target: EmonshiNobat,
-    props: {
-      token,
-    },
-  });
-}
-let EmonshiCallback = document.querySelector("emonshi-callback");
-if (EmonshiCallback) {
-  const token = EmonshiCallback.getAttribute("token");
-  while (EmonshiCallback.firstChild) {
-    EmonshiCallback.removeChild(EmonshiCallback.lastChild);
-  }
-  mount(Callback, {
-    target: EmonshiCallback,
-    props: {
-      token,
-    },
-  });
-}
-let EmonshiMeetInfo = document.querySelector("emonshi-meet-info");
-if (EmonshiMeetInfo) {
-  const token = EmonshiMeetInfo.getAttribute("token");
-  while (EmonshiMeetInfo.firstChild) {
-    EmonshiMeetInfo.removeChild(EmonshiMeetInfo.lastChild);
-  }
-  mount(MeetInfo, {
-    target: EmonshiMeetInfo,
-    props: {
-      token,
-    },
-  });
-}
-let EmonshiMeetingInfoCard = document.querySelector("emonshi-meet-info-card");
-if (EmonshiMeetingInfoCard) {
-  const token = EmonshiMeetingInfoCard.getAttribute("token");
-  while (EmonshiMeetingInfoCard.firstChild) {
-    EmonshiMeetingInfoCard.removeChild(EmonshiMeetingInfoCard.lastChild);
-  }
-  mount(MeetingInfoCard, {
-    target: EmonshiMeetingInfoCard,
-    props: {
-      token,
-    },
-  });
-}
+import Home from "./lib/webcomponents/home.svelte";
 
-let EmonshiInvoice = document.querySelector("emonshi-invoice");
-if (EmonshiInvoice) {
-  const token = EmonshiInvoice.getAttribute("token");
-  while (EmonshiInvoice.firstChild) {
-    EmonshiInvoice.removeChild(EmonshiInvoice.lastChild);
+let HomeSelector = document.querySelector("app-home");
+if (HomeSelector) {
+  const attributes = HomeSelector.getAttributeNames();
+  let props = {};
+  attributes.forEach((attribute) => {
+    props[attribute] = HomeSelector.getAttribute(attribute);
+  });
+  console.log(props);
+  while (HomeSelector.firstChild) {
+    HomeSelector.removeChild(HomeSelector.lastChild);
   }
-  mount(Invoice, {
-    target: EmonshiInvoice,
-    props: {
-      token,
-    },
+  mount(Home, {
+    target: HomeSelector,
+    props,
   });
 }

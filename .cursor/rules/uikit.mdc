@@ -1,0 +1,6 @@
+---
+description: 
+globs: *.svelte
+alwaysApply: false
+---
+use uikit and daisy ui for writing components
