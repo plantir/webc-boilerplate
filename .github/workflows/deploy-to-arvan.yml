@@ -31,20 +31,20 @@ jobs:
       # Upload to Arvan Cloud
       - name: Deploy to Arvan Cloud
         env:
-          ARVAN_ACCESS_KEY: ${{ secrets.ARVAN_ACCESS_KEY }} # کلید API آروان
-          ARVAN_SECRET_KEY: ${{ secrets.ARVAN_SECRET_KEY }}   # نام باکت آروان
+          # ARVAN_ACCESS_KEY: ${{ secrets.ARVAN_ACCESS_KEY }} # کلید API آروان
+          # ARVAN_SECRET_KEY: ${{ secrets.ARVAN_SECRET_KEY }}   # نام باکت آروان
         run: |
           # نصب ابزار s3cmd
-          sudo apt update && sudo apt install -y s3cmd
+          # sudo apt update && sudo apt install -y s3cmd
 
           # تنظیم s3cmd برای ابر آروان
-          echo "[default]
-          access_key = b8e1cfb1-39f5-49d9-be8c-824f19ed7449
-          secret_key = d722aedb7b06bfdf977a9d2eb803c0afdb02be7f65acf6b3ba3ae500eca43651
-          host_base = s3.ir-thr-at1.arvanstorage.ir
-          host_bucket = %(bucket)s.s3.ir-thr-at1.arvanstorage.ir
-          use_https = True
-          " > ~/.s3cfg
+          # echo "[default]
+          # access_key = b8e1cfb1-39f5-49d9-be8c-824f19ed7449
+          # secret_key = d722aedb7b06bfdf977a9d2eb803c0afdb02be7f65acf6b3ba3ae500eca43651
+          # host_base = s3.ir-thr-at1.arvanstorage.ir
+          # host_bucket = %(bucket)s.s3.ir-thr-at1.arvanstorage.ir
+          # use_https = True
+          # " > ~/.s3cfg
 
           # آپلود محتویات پوشه dist به آروان
           # s3cmd sync --acl-public ./dist/assets/ s3://nobat-cdn
